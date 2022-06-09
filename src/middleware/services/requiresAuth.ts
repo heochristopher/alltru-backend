@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { Request, Response, NextFunction } from 'express'
 
-export const checkToken = async (req: Request, res: Response, next: NextFunction) => {
+export const requiresAuth = async (req: Request, res: Response, next: NextFunction) => {
     const token = req.cookies['auth-token']
     if(!token) return res.status(400).json('You are not logged in')
     try {

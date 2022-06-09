@@ -1,5 +1,5 @@
 {
-  "name": "auth-playground",
+  "name": "altru-backend",
   "version": "1.0.0",
   "main": "dist/app.js",
   "scripts": {
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/heochristopher/auth-playground.git"
+    "url": "git+https://github.com/heochristopher/altru-backend.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/heochristopher/auth-playground/issues"
+    "url": "https://github.com/heochristopher/altru-backend/issues"
   },
-  "homepage": "https://github.com/heochristopher/auth-playground#readme",
+  "homepage": "https://github.com/heochristopher/altru-backend#readme",
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/cookie-parser": "^1.4.2",
