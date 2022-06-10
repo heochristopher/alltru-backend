@@ -1,37 +1,39 @@
 import mongoose, { Schema, model, connect } from 'mongoose'
+import { Grade } from './enums/Grade'
 import { Role } from './enums/Role'
+import { ListingAttributes, StudentListing } from './Listing'
 
 //* held on the token, sent to orgs on apply, held on frontend user object
 export interface StudentData {
     _id: mongoose.Types.ObjectId
-    firstName: String,
-    lastName: String,
-    email: String,
+    firstName: string,
+    lastName: string,
+    email: string,
     role: Role.Student,
-    avatar: String,
-    gradYear: Number,
+    avatar: string,
+    grade: Grade
 }
 
 //* retrieved on profile visit, public to all
 export interface StudentAttributes extends StudentData {
-    school: String,
+    school: string,
     contact: {
-        github: String,
-        linkedIn: String
+        github: string,
+        linkedIn: string
     },
-    biography: String,
-    resume: String,
+    biography: string,
+    resume: string,
 }
 
 //* private information, visible to only user on dashboard
 export interface StudentInterface extends StudentAttributes {
-    // saved: Listing[],
-    //applied: Listing[],
+    saved: ListingAttributes[],
+    applied: StudentListing[],
 }
 
 //* never gets sent
 export interface StudentCredentials extends StudentInterface {
-    password: String,
+    password: string,
 }
 
 const studentSchema = new Schema({
@@ -39,10 +41,10 @@ const studentSchema = new Schema({
     lastName: {type: String, trim: true, required: true},
     email: { type: String, required: true},
     password: { type: String, required: true},
-    role: Role.Student,
+    role: {type: String, default: Role.Student},
     avatar: {type: String, default: 'https://res.cloudinary.com/lupusawareness/image/upload/v1650405593/wugaaghxaiqoiidbitdi.jpg'},
     school: {type: String, required: true},
-    gradYear: {type: Number, required: true},
+    grade: {type: String, required: true},
     contact: {
         github: {type: String, default: null},
         linkedIn: {type: String, default: null}

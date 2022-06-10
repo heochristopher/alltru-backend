@@ -8,24 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.joi = void 0;
-const joi_1 = __importDefault(require("joi"));
-const joi = () => __awaiter(void 0, void 0, void 0, function* () {
-    const joiSchema = joi_1.default.object({
-        firstName: joi_1.default.string().required(),
-        lastName: joi_1.default.string().required(),
-        email: joi_1.default.string().required().email(),
-        password: joi_1.default.string().min(6).required()
-    });
+exports.queryEvents = void 0;
+const Listing_1 = require("../../models/Listing");
+const queryEvents = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield joiSchema.validateAsync();
+        let listings = yield Listing_1.Listing.find();
+        res.status(200).json(listings);
     }
     catch (error) {
-        return error;
+        res.status(400).json(error);
     }
 });
-exports.joi = joi;
+exports.queryEvents = queryEvents;

@@ -2,17 +2,26 @@ import mongoose, { Schema, model, connect } from 'mongoose'
 import { Role } from './enums/Role'
 
 export interface AdminData {
-    firstName: String,
-    lastName: String,
-    role: Role.Admin,
-    avatar: String
-}
-
-export interface AdminAttributes extends AdminData {
     _id: mongoose.Types.ObjectId
+    email: string,
+    firstName: string,
+    lastName: string,
+    role: Role.Admin,
+    avatar: string
 }
 
 export interface AdminInterface extends AdminData {
-    email: String,
-    password: String,
+    password: string,
 }
+
+const adminSchema = new Schema({
+    firstName: {type: String, trim: true, required: true},
+    lastName: {type: String, trim: true, required: true},
+    email: { type: String, required: true},
+    password: { type: String, required: true},
+    role: {type: String, default: Role.Admin},
+    avatar: {type: String, default: 'https://res.cloudinary.com/lupusawareness/image/upload/v1650405593/wugaaghxaiqoiidbitdi.jpg'},
+})
+
+export const Admin = mongoose.model<AdminInterface>
+('Admin', adminSchema)

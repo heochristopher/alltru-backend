@@ -8,24 +8,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.joi = void 0;
-const joi_1 = __importDefault(require("joi"));
-const joi = () => __awaiter(void 0, void 0, void 0, function* () {
-    const joiSchema = joi_1.default.object({
-        firstName: joi_1.default.string().required(),
-        lastName: joi_1.default.string().required(),
-        email: joi_1.default.string().required().email(),
-        password: joi_1.default.string().min(6).required()
-    });
+exports.sendOtherOrg = void 0;
+const Role_1 = require("../../../models/enums/Role");
+const Organization_1 = require("../../../models/Organization");
+const sendOtherOrg = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield joiSchema.validateAsync();
+        const user = yield Organization_1.Org.findById(req.params.id);
+        const org = {
+            _id: user._id,
+            email: user.email,
+            name: user.name,
+            role: Role_1.Role.Org,
+            avatar: user.avatar,
+            biography: user.biography,
+            listings: user.listings
+        };
+        res.json(org);
     }
     catch (error) {
-        return error;
+        res.status(400).json(error);
     }
 });
-exports.joi = joi;
+exports.sendOtherOrg = sendOtherOrg;

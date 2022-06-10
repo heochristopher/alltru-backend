@@ -23,16 +23,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Org = void 0;
+exports.User = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const Role_1 = require("./enums/Role");
-const orgSchema = new mongoose_1.Schema({
-    name: { type: String, trim: true, required: true },
+const userSchema = new mongoose_1.Schema({
     email: { type: String, required: true },
     password: { type: String, required: true },
-    role: { type: String, default: Role_1.Role.Org },
-    avatar: { type: String, default: 'https://res.cloudinary.com/lupusawareness/image/upload/v1650405593/wugaaghxaiqoiidbitdi.jpg' },
-    biography: { type: String, default: null },
-    listings: { type: Array, default: [] }
+    role: { type: String, default: Role_1.Role.Student },
 });
-exports.Org = mongoose_1.default.model('Organization', orgSchema);
+exports.User = mongoose_1.default.model('User', userSchema);

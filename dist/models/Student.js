@@ -31,10 +31,10 @@ const studentSchema = new mongoose_1.Schema({
     lastName: { type: String, trim: true, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    role: Role_1.Role.Student,
+    role: { type: String, default: Role_1.Role.Student },
     avatar: { type: String, default: 'https://res.cloudinary.com/lupusawareness/image/upload/v1650405593/wugaaghxaiqoiidbitdi.jpg' },
     school: { type: String, required: true },
-    gradYear: { type: Number, required: true },
+    grade: { type: String, required: true },
     contact: {
         github: { type: String, default: null },
         linkedIn: { type: String, default: null }

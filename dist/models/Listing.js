@@ -29,12 +29,14 @@ const ListingType_1 = require("./enums/ListingType");
 const listingSchema = new mongoose_1.Schema({
     org: { type: Object, required: true },
     name: { type: String, required: true },
-    title: { type: String, required: true },
+    position: { type: String, required: true },
     type: { type: ListingType_1.ListingType, required: true },
     date: { type: Date, required: true },
     remote: { type: Boolean, required: true },
-    location: { type: String, default: null },
+    location: { type: String, required: true },
+    zip: { type: Number, required: true },
     tags: { type: Array },
-    description: { type: String, required: true }
+    description: { type: String, required: true },
+    applicants: { type: Array, default: [] }
 });
 exports.Listing = mongoose_1.default.model('Listing', listingSchema);

@@ -7,21 +7,26 @@ import {ListingType} from './enums/ListingType'
 //* public to all
 export interface ListingAttributes {
     org: OrgAttributes,
-    name: String,
-    title: String,
+    name: string,
+    position: string,
     type: ListingType
     //? should listings be deleted after they are filled
     // status: Status.Vacant,
     date: Date,
-    remote: Boolean,
-    location: String,
-    tags: String[],
-    description: String
+    remote: boolean,
+    location: string,
+    zip: number,
+    tags: string[],
+    description: string
 }
 
 //* sent when students apply, private to org and student only
 export interface Application extends StudentData {
-    note: String
+    note: string
+}
+
+export interface StudentListing extends ListingAttributes {
+    application: Application
 }
 
 //* private, only org can see
@@ -32,13 +37,15 @@ export interface OrgListing extends ListingAttributes {
 const listingSchema = new Schema({
     org: {type: Object, required: true},
     name: {type: String, required: true},
-    title: {type: String, required: true},
+    position: {type: String, required: true},
     type: {type: ListingType, required: true},
     date: {type: Date, required: true},
     remote: {type: Boolean, required: true},
-    location: {type: String, default: null},
+    location: {type: String, required: true},
+    zip: {type: Number, required: true},
     tags: {type: Array},
-    description: {type: String, required: true}
+    description: {type: String, required: true},
+    applicants: {type: Array, default: []}
 })
 
 export const Listing = mongoose.model<OrgListing>
