@@ -30,7 +30,8 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!validPassword) {
             return res.status(400).json('Invalid Password');
         }
-        const payload = (0, payload_1.payloadType)(existingUser);
+        const payload = yield Promise.resolve((0, payload_1.payloadType)(existingUser));
+        console.log(payload);
         const userToken = jsonwebtoken_1.default.sign(payload, process.env.PRIVATEKEY);
         if (req.cookies['auth-token']) {
             res.clearCookie('auth-token');

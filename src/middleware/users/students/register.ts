@@ -4,6 +4,7 @@ import { studentJoi } from '../../schemas'
 import dotenv from 'dotenv'
 import { Student } from '../../../models/Student'
 import { User } from '../../../models/User'
+import { Role } from '../../../models/enums/Role'
 dotenv.config()
 
 export const studentRegister = async (req: Request, res: Response) => {
@@ -16,7 +17,7 @@ export const studentRegister = async (req: Request, res: Response) => {
         student.password = await bcrypt.hash(req.body.password, 10);
         await student.save();
         // save in shared collection
-        const user = new User({email: req.body.email,password: student.password, role: req.body.role})
+        const user = new User({email: req.body.email,password: student.password, role: Role.Student})
         await user.save()
         res.status(200).json(`Welcome, ${student.firstName}`)
     } catch (error) {

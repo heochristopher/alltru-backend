@@ -18,6 +18,7 @@ const schemas_1 = require("../../schemas");
 const dotenv_1 = __importDefault(require("dotenv"));
 const Student_1 = require("../../../models/Student");
 const User_1 = require("../../../models/User");
+const Role_1 = require("../../../models/enums/Role");
 dotenv_1.default.config();
 const studentRegister = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -30,7 +31,7 @@ const studentRegister = (req, res) => __awaiter(void 0, void 0, void 0, function
         student.password = yield bcryptjs_1.default.hash(req.body.password, 10);
         yield student.save();
         // save in shared collection
-        const user = new User_1.User({ email: req.body.email, password: student.password, role: req.body.role });
+        const user = new User_1.User({ email: req.body.email, password: student.password, role: Role_1.Role.Student });
         yield user.save();
         res.status(200).json(`Welcome, ${student.firstName}`);
     }

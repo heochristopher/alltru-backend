@@ -4,6 +4,7 @@ import { adminJoi } from '../../schemas'
 import dotenv from 'dotenv'
 import { Admin } from '../../../models/Admin'
 import { User } from '../../../models/User'
+import { Role } from '../../../models/enums/Role'
 dotenv.config()
 
 export const adminRegister = async (req: Request, res: Response) => {
@@ -16,7 +17,7 @@ export const adminRegister = async (req: Request, res: Response) => {
         admin.password = await bcrypt.hash(req.body.password, 10);
         await admin.save();
         //save in shared collection
-        const user = new User({email: req.body.email,password: admin.password, role: req.body.role})
+        const user = new User({email: req.body.email,password: admin.password, role: Role.Admin})
         await user.save()
         res.status(200).json(`Welcome, Admin ${admin.firstName}`)
     } catch (error) {

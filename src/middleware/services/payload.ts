@@ -1,43 +1,50 @@
-import { AdminData } from "../../models/Admin"
+import { Admin, AdminData } from "../../models/Admin"
 import { Role } from "../../models/enums/Role"
-import { OrgData } from "../../models/Organization"
-import { StudentData } from "../../models/Student"
+import { Org, OrgData } from "../../models/Organization"
+import { Student, StudentData } from "../../models/Student"
 
-export function payloadType(user: any) {
-    if(user.role === Role.Student) {
-        const payload: StudentData = {
-            _id: user._id,
-            email: user.email,
-            grade: user.grade,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            role: Role.Student,
-            avatar: user.avatar
+export async function payloadType(existingUser: any) {
+    try {
+        if(existingUser.role === Role.Student) {
+            const user = await Student.findOne({email: existingUser.email})
+            const payload: StudentData = {
+                _id: user!._id,
+                email: user!.email,
+                grade: user!.grade,
+                firstName: user!.firstName,
+                lastName: user!.lastName,
+                role: Role.Student,
+                avatar: user!.avatar
+            }
+            return payload
         }
-        return payload
-    }
-
-    else if(user.role === Role.Org) {
-        const payload: OrgData = {
-            _id: user._id,
-            email: user.email,
-            name: user.name,
-            role: Role.Org,
-            avatar: user.avatar,
-            biography: user.biography
+    
+        else if(existingUser.role === Role.Org) {
+            const user = await Org.findOne({email: existingUser.email})
+            const payload: OrgData = {
+                _id: user!._id,
+                email: user!.email,
+                name: user!.name,
+                role: Role.Org,
+                avatar: user!.avatar,
+                biography: user!.biography
+            }
+            return payload
         }
-        return payload
-    }
-
-    else if(user.role === Role.Admin) {
-        const payload: AdminData = {
-            _id: user._id,
-            email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            role: Role.Admin,
-            avatar: user.avatar,
+    
+        else if(existingUser.role === Role.Admin) {
+            const user = await Admin.findOne({email: existingUser.email})
+            const payload: AdminData = {
+                _id: user!._id,
+                email: user!.email,
+                firstName: user!.firstName,
+                lastName: user!.lastName,
+                role: Role.Admin,
+                avatar: user!.avatar,
+            }
+            return payload
         }
-        return payload
+    } catch (error) {
+        return error
     }
 }

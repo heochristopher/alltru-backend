@@ -18,6 +18,7 @@ const schemas_1 = require("../../schemas");
 const dotenv_1 = __importDefault(require("dotenv"));
 const Admin_1 = require("../../../models/Admin");
 const User_1 = require("../../../models/User");
+const Role_1 = require("../../../models/enums/Role");
 dotenv_1.default.config();
 const adminRegister = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -30,7 +31,7 @@ const adminRegister = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         admin.password = yield bcryptjs_1.default.hash(req.body.password, 10);
         yield admin.save();
         //save in shared collection
-        const user = new User_1.User({ email: req.body.email, password: admin.password, role: req.body.role });
+        const user = new User_1.User({ email: req.body.email, password: admin.password, role: Role_1.Role.Admin });
         yield user.save();
         res.status(200).json(`Welcome, Admin ${admin.firstName}`);
     }

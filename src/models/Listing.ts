@@ -7,7 +7,6 @@ import {ListingType} from './enums/ListingType'
 //* public to all
 export interface ListingAttributes {
     org: OrgAttributes,
-    name: string,
     position: string,
     type: ListingType
     //? should listings be deleted after they are filled
@@ -36,9 +35,8 @@ export interface OrgListing extends ListingAttributes {
 
 const listingSchema = new Schema({
     org: {type: Object, required: true},
-    name: {type: String, required: true},
     position: {type: String, required: true},
-    type: {type: ListingType, required: true},
+    type: {type: String, required: true},
     date: {type: Date, required: true},
     remote: {type: Boolean, required: true},
     location: {type: String, required: true},

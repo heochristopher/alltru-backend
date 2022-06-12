@@ -16,7 +16,6 @@ export const createListing = async(req: Request, res: Response, next: NextFuncti
     try {
         const listing = new Listing({
             org: req.body.payload,
-            name: req.body.name,
             position: req.body.position,
             type: req.body.type,
             date: Date.now(),
