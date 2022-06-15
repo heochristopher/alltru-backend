@@ -4,7 +4,7 @@ import { Role } from './enums/Role'
 import { ListingAttributes, StudentListing } from './Listing'
 
 //* held on the token, sent to orgs on apply, held on frontend user object
-export interface StudentData {
+export interface StudentToken {
     _id: mongoose.Types.ObjectId
     firstName: string,
     lastName: string,
@@ -15,7 +15,7 @@ export interface StudentData {
 }
 
 //* retrieved on profile visit, public to all
-export interface StudentAttributes extends StudentData {
+export interface StudentProfile extends StudentToken {
     school: string,
     contact: {
         github: string,
@@ -26,7 +26,7 @@ export interface StudentAttributes extends StudentData {
 }
 
 //* private information, visible to only user on dashboard
-export interface StudentInterface extends StudentAttributes {
+export interface StudentInterface extends StudentProfile {
     saved: ListingAttributes[],
     applied: StudentListing[],
 }

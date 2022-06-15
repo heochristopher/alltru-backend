@@ -7,21 +7,19 @@ const router = express.Router()
 import { login } from '../middleware/services/login'
 import { requiresAuth } from '../middleware/services/requiresAuth'
 import { logout } from '../middleware/services/logout'
-import { sendUser } from '../middleware/services/sendUser'
+import { validateToken } from '../middleware/services/validateToken'
 import { authorizeUser } from '../middleware/services/authorizeUser'
 
 //? users
 import { Role } from '../models/enums/Role'
+import { sendUser } from '../middleware/users/sendUser'
+import { sendOther } from '../middleware/users/sendOther'
 
 //students
 import { studentRegister } from '../middleware/users/students/register'
-import { sendUserStudent } from '../middleware/users/students/sendUser'
-import { sendOtherStudent } from '../middleware/users/students/sendOther'
 
 //organizations
 import { orgRegister } from '../middleware/users/organizations/register'
-import { sendUserOrg } from '../middleware/users/organizations/sendUser'
-import { sendOtherOrg } from '../middleware/users/organizations/sendOther'
 
 //admins
 import { adminRegister } from '../middleware/users/admins/register'
@@ -33,19 +31,19 @@ import { createListing } from '../middleware/listings/createListing'
 
 //? GET REQUESTS
 //auth
+router.get('/validateToken', requiresAuth, validateToken)
+
+//users
 router.get('/sendUser', requiresAuth, sendUser)
+router.get('/sendOther/:id',  sendOther)
 
 //student
 //TODO figure out how to send in param of Role.Student
 // router.get('/dashboard', requiresAuth, authorizeUser(Role.Student), sendUserStudent)
-router.get('/dashboard/student', requiresAuth, sendUserStudent)
-router.get('/profile/:id', sendOtherStudent)
 
 //organization
 //TODO figure out how to send in param of Role.Org
 // router.get('/dashboard/org', requiresAuth, authorizeUser(Role.Org), sendUserOrg)
-router.get('/dashboard/org', requiresAuth, sendUserOrg)
-router.get('/org/:id', sendOtherOrg)
 
 //? POST REQUESTS
 //logout

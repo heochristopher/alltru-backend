@@ -16,7 +16,6 @@ exports.login = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const dotenv_1 = __importDefault(require("dotenv"));
-const payload_1 = require("./payload");
 const User_1 = require("../../models/User");
 dotenv_1.default.config();
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -30,8 +29,14 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!validPassword) {
             return res.status(400).json('Invalid Password');
         }
-        const payload = yield Promise.resolve((0, payload_1.payloadType)(existingUser));
-        console.log(payload);
+        const payload = {
+            _id: existingUser._id,
+            email: existingUser.email,
+            firstName: existingUser.firstName,
+            lastName: existingUser.lastName,
+            role: existingUser.role,
+            avatar: existingUser.avatar
+        };
         const userToken = jsonwebtoken_1.default.sign(payload, process.env.PRIVATEKEY);
         if (req.cookies['auth-token']) {
             res.clearCookie('auth-token');

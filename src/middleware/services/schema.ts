@@ -5,16 +5,18 @@ const studentJoi = Joi.object(
         firstName: Joi.string().required(),
         lastName: Joi.string().required(),
         email: Joi.string().required().email(),
-        school: Joi.string().required(),
+        affiliation: Joi.string().required(),
         grade: Joi.string().required(),
         password: Joi.string().min(6).required()
     }
 )
 const orgJoi = Joi.object(
     {
-        name: Joi.string().required(),
+        firstName: Joi.string().required(),
+        lastName: Joi.string().required(),
         email: Joi.string().required().email(),
-        password: Joi.string().min(6).required()
+        password: Joi.string().min(6).required(),
+        affiliation: Joi.string().required(),
     }
 )
 const adminJoi = Joi.object(

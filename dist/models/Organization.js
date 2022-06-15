@@ -27,7 +27,9 @@ exports.Org = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const Role_1 = require("./enums/Role");
 const orgSchema = new mongoose_1.Schema({
-    name: { type: String, trim: true, required: true },
+    firstName: { type: String, trim: true, required: true },
+    lastName: { type: String, trim: true, required: true },
+    orgName: { type: String, trim: true, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
     role: { type: String, default: Role_1.Role.Org },

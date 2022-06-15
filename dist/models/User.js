@@ -25,10 +25,25 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const Role_1 = require("./enums/Role");
 const userSchema = new mongoose_1.Schema({
+    firstName: { type: String, trim: true, required: true },
+    lastName: { type: String, trim: true, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    role: { type: String, default: Role_1.Role.Student },
+    role: { type: String, required: true },
+    avatar: { type: String, default: 'https://res.cloudinary.com/lupusawareness/image/upload/v1650405593/wugaaghxaiqoiidbitdi.jpg' },
+    affiliation: { type: String, required: true },
+    grade: { type: String },
+    contact: {
+        github: { type: String, default: null },
+        linkedIn: { type: String, default: null }
+    },
+    biography: { type: String, default: null },
+    //? host resume on Cloudinary?
+    resume: { type: String, default: null },
+    savedListings: { type: Array, default: [] },
+    appliedListings: { type: Array, default: [] },
+    createdListings: { type: Array, default: [] },
+    listings: { type: Array, default: [] }
 });
 exports.User = mongoose_1.default.model('User', userSchema);

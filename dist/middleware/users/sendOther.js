@@ -9,29 +9,29 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendOtherStudent = void 0;
-const Role_1 = require("../../../models/enums/Role");
-const User_1 = require("../../../models/User");
-const sendOtherStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.sendOther = void 0;
+const User_1 = require("../../models/User");
+const sendOther = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield User_1.User.findById(req.params.id);
-        const student = {
-            _id: user._id,
-            email: user.email,
-            grade: user.grade,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            role: Role_1.Role.Student,
-            avatar: user.avatar,
-            affiliation: user.affiliation,
-            contact: user.contact,
-            biography: user.biography,
-            resume: user.resume,
+        const existingUser = yield User_1.User.findById(req.params.id);
+        const user = {
+            _id: existingUser._id,
+            email: existingUser.email,
+            grade: existingUser.grade,
+            firstName: existingUser.firstName,
+            lastName: existingUser.lastName,
+            role: existingUser.role,
+            avatar: existingUser.avatar,
+            affiliation: existingUser.affiliation,
+            contact: existingUser.contact,
+            biography: existingUser.biography,
+            resume: existingUser.resume,
+            createdListings: existingUser.createdListings,
         };
-        res.json(student);
+        res.json(user);
     }
     catch (error) {
         res.status(400).json(error);
     }
 });
-exports.sendOtherStudent = sendOtherStudent;
+exports.sendOther = sendOther;

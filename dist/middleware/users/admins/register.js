@@ -14,25 +14,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.adminRegister = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
-const schemas_1 = require("../../schemas");
+const schema_1 = require("../../services/schema");
 const dotenv_1 = __importDefault(require("dotenv"));
-const Admin_1 = require("../../../models/Admin");
 const User_1 = require("../../../models/User");
 const Role_1 = require("../../../models/enums/Role");
 dotenv_1.default.config();
 const adminRegister = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield schemas_1.adminJoi.validateAsync(req.body);
+        yield schema_1.adminJoi.validateAsync(req.body);
         //find an existing user
-        let doesExist = yield Admin_1.Admin.findOne({ email: req.body.email });
+        let doesExist = yield User_1.User.findOne({ email: req.body.email });
         if (doesExist)
             return res.status(400).send("User already registered.");
-        const admin = new Admin_1.Admin(req.body);
+        const admin = new User_1.User(req.body);
         admin.password = yield bcryptjs_1.default.hash(req.body.password, 10);
+        admin.role = Role_1.Role.Admin;
         yield admin.save();
-        //save in shared collection
-        const user = new User_1.User({ email: req.body.email, password: admin.password, role: Role_1.Role.Admin });
-        yield user.save();
         res.status(200).json(`Welcome, Admin ${admin.firstName}`);
     }
     catch (error) {

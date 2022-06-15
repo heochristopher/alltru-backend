@@ -1,12 +1,11 @@
 import mongoose, { Schema, model, connect } from 'mongoose'
-import { StudentData } from './Student'
-import { OrgAttributes } from './Organization'
 import {ListingType} from './enums/ListingType'
+import { UserProfile, UserToken } from './User'
 // import { Status } from './enums/Status'
 
 //* public to all
 export interface ListingAttributes {
-    org: OrgAttributes,
+    org: UserProfile,
     position: string,
     type: ListingType
     //? should listings be deleted after they are filled
@@ -20,7 +19,7 @@ export interface ListingAttributes {
 }
 
 //* sent when students apply, private to org and student only
-export interface Application extends StudentData {
+export interface Application extends UserToken {
     note: string
 }
 

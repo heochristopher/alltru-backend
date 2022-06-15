@@ -12,15 +12,13 @@ exports.router = router;
 const login_1 = require("../middleware/services/login");
 const requiresAuth_1 = require("../middleware/services/requiresAuth");
 const logout_1 = require("../middleware/services/logout");
-const sendUser_1 = require("../middleware/services/sendUser");
+const validateToken_1 = require("../middleware/services/validateToken");
+const sendUser_1 = require("../middleware/users/sendUser");
+const sendOther_1 = require("../middleware/users/sendOther");
 //students
 const register_1 = require("../middleware/users/students/register");
-const sendUser_2 = require("../middleware/users/students/sendUser");
-const sendOther_1 = require("../middleware/users/students/sendOther");
 //organizations
 const register_2 = require("../middleware/users/organizations/register");
-const sendUser_3 = require("../middleware/users/organizations/sendUser");
-const sendOther_2 = require("../middleware/users/organizations/sendOther");
 //admins
 const register_3 = require("../middleware/users/admins/register");
 //? listings
@@ -28,17 +26,16 @@ const createListing_1 = require("../middleware/listings/createListing");
 //* ROUTES
 //? GET REQUESTS
 //auth
+router.get('/validateToken', requiresAuth_1.requiresAuth, validateToken_1.validateToken);
+//users
 router.get('/sendUser', requiresAuth_1.requiresAuth, sendUser_1.sendUser);
+router.get('/sendOther/:id', sendOther_1.sendOther);
 //student
 //TODO figure out how to send in param of Role.Student
 // router.get('/dashboard', requiresAuth, authorizeUser(Role.Student), sendUserStudent)
-router.get('/dashboard/student', requiresAuth_1.requiresAuth, sendUser_2.sendUserStudent);
-router.get('/profile/:id', sendOther_1.sendOtherStudent);
 //organization
 //TODO figure out how to send in param of Role.Org
 // router.get('/dashboard/org', requiresAuth, authorizeUser(Role.Org), sendUserOrg)
-router.get('/dashboard/org', requiresAuth_1.requiresAuth, sendUser_3.sendUserOrg);
-router.get('/org/:id', sendOther_2.sendOtherOrg);
 //? POST REQUESTS
 //logout
 router.post('/logout', logout_1.logout);

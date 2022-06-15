@@ -4,8 +4,10 @@ import { ListingAttributes, OrgListing } from './Listing'
 
 //* held on the token, sent to orgs on apply, held on frontend user object
 export interface OrgData {
-    _id: mongoose.Types.ObjectId
-    name: string,
+    _id: mongoose.Types.ObjectId,
+    firstName: string,
+    lastName: string,
+    orgName: string,
     role: Role.Org
     avatar: string,
     email: string,
@@ -28,7 +30,9 @@ export interface OrgCredentials extends OrgInterface {
 }
 
 const orgSchema = new Schema({
-    name: {type: String, trim: true, required: true},
+    firstName: {type: String, trim: true, required: true},
+    lastName: {type: String, trim: true, required: true},
+    orgName: {type: String, trim: true, required: true},
     email: { type: String, required: true},
     password: { type: String, required: true},
     role: {type: String, default: Role.Org},
