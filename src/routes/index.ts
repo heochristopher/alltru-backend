@@ -14,6 +14,7 @@ import { authorizeUser } from '../middleware/services/authorizeUser'
 import { Role } from '../models/enums/Role'
 import { sendUser } from '../middleware/users/sendUser'
 import { sendOther } from '../middleware/users/sendOther'
+import { profilePic } from '../middleware/users/profilePic'
 
 //students
 import { studentRegister } from '../middleware/users/students/register'
@@ -63,5 +64,8 @@ router.post('/adminRegister', adminRegister)
 router.post('/listing', requiresAuth, createListing)
 router.post('/saveListing/:id', requiresAuth, saveListing)
 router.post('/apply/:id', requiresAuth, apply)
+
+//? PATCH REQUESTS
+router.patch('/user/profilePic', requiresAuth, profilePic)
 
 export {router}

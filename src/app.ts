@@ -7,7 +7,6 @@ import { router } from './routes/index'
 import './DB/mongoose'
 import dotenv from 'dotenv'
 dotenv.config()
-
 const cloudinary = require("cloudinary").v2
 
 const app = express();

@@ -14,14 +14,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.adminRegister = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
-const schema_1 = require("../../services/schema");
+const schemas_1 = require("../../services/schemas");
 const dotenv_1 = __importDefault(require("dotenv"));
 const User_1 = require("../../../models/User");
 const Role_1 = require("../../../models/enums/Role");
 dotenv_1.default.config();
 const adminRegister = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield schema_1.adminJoi.validateAsync(req.body);
+        yield schemas_1.adminJoi.validateAsync(req.body);
         //find an existing user
         let doesExist = yield User_1.User.findOne({ email: req.body.email });
         if (doesExist)

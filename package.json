@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "dist/app.js",
   "scripts": {
-    "build":"npm i",
+    "build": "npm i",
     "dev": "nodemon dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/app.js"
@@ -36,7 +36,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.2",
-    "cloudinary": "^1.29.0",
+    "cloudinary": "^1.30.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",

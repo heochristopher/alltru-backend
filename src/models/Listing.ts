@@ -12,11 +12,12 @@ export interface ListingAttributes {
     // status: Status.Vacant,
     date: Date,
     remote: boolean,
-    location?: string,
-    zip?: number,
+    location?: {
+        borough: string,
+        zip: string
+    },
     tags: string[],
-    description: string
-    //TODO add a spot for question(s)
+    description: string,
 }
 
 //* sent when students apply, private to org and student only
@@ -39,8 +40,10 @@ const listingSchema = new Schema({
     type: {type: String, required: true},
     date: {type: Date, required: true},
     remote: {type: Boolean, required: true},
-    location: {type: String},
-    zip: {type: Number},
+    location: {
+        borough: {type: String},
+        zip: {type: String}
+    },
     tags: {type: Array, required: true},
     description: {type: String, required: true},
     applicants: {type: Array, default: []}

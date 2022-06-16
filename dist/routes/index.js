@@ -15,6 +15,7 @@ const logout_1 = require("../middleware/services/logout");
 const validateToken_1 = require("../middleware/services/validateToken");
 const sendUser_1 = require("../middleware/users/sendUser");
 const sendOther_1 = require("../middleware/users/sendOther");
+const profilePic_1 = require("../middleware/users/profilePic");
 //students
 const register_1 = require("../middleware/users/students/register");
 //organizations
@@ -51,3 +52,5 @@ router.post('/adminRegister', register_3.adminRegister);
 router.post('/listing', requiresAuth_1.requiresAuth, createListing_1.createListing);
 router.post('/saveListing/:id', requiresAuth_1.requiresAuth, saveListing_1.saveListing);
 router.post('/apply/:id', requiresAuth_1.requiresAuth, apply_1.apply);
+//? PATCH REQUESTS
+router.patch('/user/profilePic', requiresAuth_1.requiresAuth, profilePic_1.profilePic);

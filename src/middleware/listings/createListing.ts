@@ -7,10 +7,9 @@ export const createListing = async(req: Request, res: Response, next: NextFuncti
     if(req.body.payload.role === Role.Student) {return res.status(400).json('Students cannot create listings')}
     if(req.body.remote){
         req.body.location = null
-        req.body.zip = null
     }
-    if(req.body.zip !== null) {
-        if(req.body.zip.toString().length !== 5) return res.status(200).json(`${req.body.zip} is not a valid zip code.`)
+    if(req.body.location !== null) {
+        if(req.body.location.zip.length !== 5) return res.status(200).json(`${req.body.location.zip} is not a valid zip code.`)
     }
     try {
         const listing = new Listing({
@@ -20,7 +19,6 @@ export const createListing = async(req: Request, res: Response, next: NextFuncti
             date: Date.now(),
             remote: req.body.remote,
             location: req.body.location,
-            zip: req.body.zip,
             description: req.body.description,
             tags: req.body.tags
             });
