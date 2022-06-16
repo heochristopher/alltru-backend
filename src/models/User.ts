@@ -11,12 +11,12 @@ export interface UserToken {
     email: string,
     role: Role,
     avatar: string,
+    affiliation: string,
     grade?: Grade
 }
 
 //* retrieved on profile visit, public to all
 export interface UserProfile extends UserToken {
-    affiliation: string,
     contact: {
         github: string,
         linkedIn: string
@@ -24,21 +24,21 @@ export interface UserProfile extends UserToken {
     biography: string,
     resume: string,
     //for organizations, displays the listings that the org posted with public info
-    createdListings?: ListingAttributes[]
+    createdListings?: mongoose.Types.ObjectId[]
 }
 
 //* private information, visible to only student on dashboard
 export interface StudentInterface extends UserProfile {
     //array of listings that orgs post with public info that the student saved
-    savedListings: ListingAttributes[],
+    savedListings: mongoose.Types.ObjectId[],
     //array of listings that the student applied for, carries public info + the student's application
-    appliedListings: StudentListing[],
+    appliedListings: mongoose.Types.ObjectId[],
 }
 
 //* private information, visible to only org on dashboard
 export interface OrgInterface extends UserProfile {
     //array of listings that the org posted, carries public info + every student's application
-    listings: OrgListing[]
+    listings: mongoose.Types.ObjectId[],
 }
 
 //* combines student and org data to be saved as one user in the database

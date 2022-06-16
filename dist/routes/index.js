@@ -23,6 +23,8 @@ const register_2 = require("../middleware/users/organizations/register");
 const register_3 = require("../middleware/users/admins/register");
 //? listings
 const createListing_1 = require("../middleware/listings/createListing");
+const saveListing_1 = require("../middleware/listings/saveListing");
+const apply_1 = require("../middleware/listings/apply");
 //* ROUTES
 //? GET REQUESTS
 //auth
@@ -47,3 +49,5 @@ router.post('/orgRegister', register_2.orgRegister);
 router.post('/adminRegister', register_3.adminRegister);
 //listings
 router.post('/listing', requiresAuth_1.requiresAuth, createListing_1.createListing);
+router.post('/saveListing/:id', requiresAuth_1.requiresAuth, saveListing_1.saveListing);
+router.post('/apply/:id', requiresAuth_1.requiresAuth, apply_1.apply);

@@ -19,7 +19,9 @@ export const login = async (req: Request, res: Response) => {
             firstName: existingUser!.firstName,
             lastName: existingUser!.lastName,
             role: existingUser!.role,
-            avatar: existingUser!.avatar
+            affiliation: existingUser!.affiliation,
+            avatar: existingUser!.avatar,
+            grade: existingUser!.grade
         }
         const userToken = jwt.sign(payload, process.env.PRIVATEKEY as string)
         if(req.cookies['auth-token']) {res.clearCookie('auth-token')}

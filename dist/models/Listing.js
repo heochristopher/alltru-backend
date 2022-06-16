@@ -31,9 +31,9 @@ const listingSchema = new mongoose_1.Schema({
     type: { type: String, required: true },
     date: { type: Date, required: true },
     remote: { type: Boolean, required: true },
-    location: { type: String, required: true },
-    zip: { type: Number, required: true },
-    tags: { type: Array },
+    location: { type: String },
+    zip: { type: Number },
+    tags: { type: Array, required: true },
     description: { type: String, required: true },
     applicants: { type: Array, default: [] }
 });

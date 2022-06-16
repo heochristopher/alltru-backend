@@ -26,6 +26,8 @@ import { adminRegister } from '../middleware/users/admins/register'
 
 //? listings
 import { createListing } from '../middleware/listings/createListing'
+import {saveListing} from '../middleware/listings/saveListing'
+import {apply} from '../middleware/listings/apply'
 
 //* ROUTES
 
@@ -59,5 +61,7 @@ router.post('/adminRegister', adminRegister)
 
 //listings
 router.post('/listing', requiresAuth, createListing)
+router.post('/saveListing/:id', requiresAuth, saveListing)
+router.post('/apply/:id', requiresAuth, apply)
 
 export {router}

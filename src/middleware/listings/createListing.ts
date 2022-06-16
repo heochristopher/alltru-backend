@@ -1,17 +1,16 @@
 import { Request, Response, NextFunction } from 'express'
-import { Org } from '../../models/Organization'
 import { Role } from '../../models/enums/Role'
 import { Listing, ListingAttributes } from '../../models/Listing'
+import { User } from '../../models/User'
 
 export const createListing = async(req: Request, res: Response, next: NextFunction) => {
-    if(req.body.payload.role === Role.Student) {return res.status(400).json('Students cannot create events')}
-    console.log(req.body)
+    if(req.body.payload.role === Role.Student) {return res.status(400).json('Students cannot create listings')}
     if(req.body.remote){
         req.body.location = null
         req.body.zip = null
     }
-    if(req.body.zip != null) {
-        if(req.body.zip.toString().length != 5) return res.status(200).json(`${req.body.zip} is not a valid zip code.`)
+    if(req.body.zip !== null) {
+        if(req.body.zip.toString().length !== 5) return res.status(200).json(`${req.body.zip} is not a valid zip code.`)
     }
     try {
         const listing = new Listing({
@@ -26,12 +25,12 @@ export const createListing = async(req: Request, res: Response, next: NextFuncti
             tags: req.body.tags
             });
         await listing.save()
-        await Org.findOneAndUpdate({
+        await User.findOneAndUpdate({
             _id: req.body.payload._id
-        }, {$push: {listings: listing}})
-        
+        }, {$push: {createdListings: listing._id}})
         res.status(200).send(listing)
     } catch (error) {
+        console.log(error)
         res.status(400).send(error)
     }
 }

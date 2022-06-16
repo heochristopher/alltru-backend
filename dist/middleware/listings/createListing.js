@@ -10,20 +10,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createListing = void 0;
-const Organization_1 = require("../../models/Organization");
 const Role_1 = require("../../models/enums/Role");
 const Listing_1 = require("../../models/Listing");
+const User_1 = require("../../models/User");
 const createListing = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.body.payload.role === Role_1.Role.Student) {
-        return res.status(400).json('Students cannot create events');
+        return res.status(400).json('Students cannot create listings');
     }
-    console.log(req.body);
     if (req.body.remote) {
         req.body.location = null;
         req.body.zip = null;
     }
-    if (req.body.zip != null) {
-        if (req.body.zip.toString().length != 5)
+    if (req.body.zip !== null) {
+        if (req.body.zip.toString().length !== 5)
             return res.status(200).json(`${req.body.zip} is not a valid zip code.`);
     }
     try {
@@ -39,12 +38,13 @@ const createListing = (req, res, next) => __awaiter(void 0, void 0, void 0, func
             tags: req.body.tags
         });
         yield listing.save();
-        yield Organization_1.Org.findOneAndUpdate({
+        yield User_1.User.findOneAndUpdate({
             _id: req.body.payload._id
-        }, { $push: { listings: listing } });
+        }, { $push: { createdListings: listing._id } });
         res.status(200).send(listing);
     }
     catch (error) {
+        console.log(error);
         res.status(400).send(error);
     }
 });
