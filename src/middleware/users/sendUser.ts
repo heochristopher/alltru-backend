@@ -10,7 +10,7 @@ export const sendUser = async (req: Request, res: Response) => {
             const student: StudentInterface = {
                 _id: user!._id,
                 email: user!.email,
-                grade: user!.grade,
+                birthday: user!.birthday,
                 firstName: user!.firstName,
                 lastName: user!.lastName,
                 role: user!.role,
@@ -27,7 +27,6 @@ export const sendUser = async (req: Request, res: Response) => {
             const org: OrgInterface = {
                 _id: user!._id,
                 email: user!.email,
-                grade: user!.grade,
                 firstName: user!.firstName,
                 lastName: user!.lastName,
                 role: user!.role,

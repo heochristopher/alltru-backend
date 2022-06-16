@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs'
 import dotenv from 'dotenv'
 import { User } from '../../../models/User'
 import { Role } from '../../../models/enums/Role'
-import { orgJoi } from '../../services/schemas'
+import { orgJoi } from '../schemas'
 dotenv.config()
 
 export const orgRegister = async (req: Request, res: Response) => {

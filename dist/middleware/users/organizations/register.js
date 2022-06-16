@@ -17,7 +17,7 @@ const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const User_1 = require("../../../models/User");
 const Role_1 = require("../../../models/enums/Role");
-const schemas_1 = require("../../services/schemas");
+const schemas_1 = require("../schemas");
 dotenv_1.default.config();
 const orgRegister = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {

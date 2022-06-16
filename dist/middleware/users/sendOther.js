@@ -17,7 +17,7 @@ const sendOther = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const user = {
             _id: existingUser._id,
             email: existingUser.email,
-            grade: existingUser.grade,
+            birthday: existingUser.birthday,
             firstName: existingUser.firstName,
             lastName: existingUser.lastName,
             role: existingUser.role,

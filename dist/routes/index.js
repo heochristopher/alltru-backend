@@ -26,8 +26,13 @@ const register_3 = require("../middleware/users/admins/register");
 const createListing_1 = require("../middleware/listings/createListing");
 const saveListing_1 = require("../middleware/listings/saveListing");
 const apply_1 = require("../middleware/listings/apply");
+const queryListings_1 = require("../middleware/listings/queryListings");
+const filterListings_1 = require("../middleware/listings/filterListings");
 //* ROUTES
 //? GET REQUESTS
+//listings
+router.get('/queryListings', queryListings_1.queryListings);
+router.get('/filterListings/:q', filterListings_1.filterListings);
 //auth
 router.get('/validateToken', requiresAuth_1.requiresAuth, validateToken_1.validateToken);
 //users

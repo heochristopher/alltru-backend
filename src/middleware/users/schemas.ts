@@ -1,12 +1,15 @@
 import Joi from "joi"
 
+const minAge = new Date(new Date().setFullYear(new Date().getFullYear() - 14))
+const maxAge = new Date(new Date().setFullYear(new Date().getFullYear() - 18))
+
 const studentJoi = Joi.object(
     {
         firstName: Joi.string().required(),
         lastName: Joi.string().required(),
         email: Joi.string().required().email(),
         affiliation: Joi.string().required(),
-        grade: Joi.string().required(),
+        birthday: Joi.date().max(minAge).min(maxAge).required(),
         password: Joi.string().min(6).required()
     }
 )

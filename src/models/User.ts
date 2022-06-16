@@ -12,7 +12,8 @@ export interface UserToken {
     role: Role,
     avatar: string,
     affiliation: string,
-    grade?: Grade
+    // grade?: Grade,
+    birthday?: Date,
 }
 
 //* retrieved on profile visit, public to all
@@ -57,7 +58,7 @@ const userSchema = new Schema({
     role: {type: String, required: true},
     avatar: {type: String, default: 'https://res.cloudinary.com/heo-christopher/image/upload/v1655399460/profiles/profile_yv13kb.jpg'},
     affiliation: {type: String, required: true},
-    grade: {type: String},
+    birthday: {type: Date},
     contact: {
         github: {type: String, default: null},
         linkedIn: {type: String, default: null}

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import bcrypt from 'bcryptjs'
-import { studentJoi } from '../../services/schemas'
+import { studentJoi } from '../schemas'
 import dotenv from 'dotenv'
 import { User } from '../../../models/User'
 import { Role } from '../../../models/enums/Role'

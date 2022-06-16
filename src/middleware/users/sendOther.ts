@@ -8,7 +8,7 @@ export const sendOther = async (req: Request, res: Response) => {
         const user: UserProfile = {
             _id: existingUser!._id,
             email: existingUser!.email,
-            grade: existingUser!.grade,
+            birthday: existingUser!.birthday,
             firstName: existingUser!.firstName,
             lastName: existingUser!.lastName,
             role: existingUser!.role,

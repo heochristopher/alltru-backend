@@ -20,7 +20,7 @@ const sendUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             const student = {
                 _id: user._id,
                 email: user.email,
-                grade: user.grade,
+                birthday: user.birthday,
                 firstName: user.firstName,
                 lastName: user.lastName,
                 role: user.role,
@@ -38,7 +38,6 @@ const sendUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             const org = {
                 _id: user._id,
                 email: user.email,
-                grade: user.grade,
                 firstName: user.firstName,
                 lastName: user.lastName,
                 role: user.role,

@@ -25,7 +25,7 @@ const apply = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
             lastName: user.lastName,
             affiliation: user.affiliation,
             email: user.email,
-            grade: user.grade,
+            birthday: user.birthday,
             role: user.role,
             avatar: user.avatar,
             note: req.body.note

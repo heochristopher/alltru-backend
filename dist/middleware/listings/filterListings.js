@@ -9,15 +9,33 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.queryListings = void 0;
+exports.filterListings = void 0;
 const Listing_1 = require("../../models/Listing");
-const queryListings = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const filterListings = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        let listings = yield Listing_1.Listing.find();
-        res.status(200).json(listings);
+        const params = req.params.q.split('&');
+        const searchQuery = [];
+        params.forEach((param) => {
+            const arg = param.split('=');
+            if (arg[1] === 'true') {
+                arg[1] = true;
+            }
+            if (arg[1] === 'false') {
+                arg[1] = false;
+            }
+            const option = {};
+            option[arg[0]] = arg[1];
+            searchQuery.push(option);
+        });
+        const listings = yield Listing_1.Listing.find({
+            $and: searchQuery
+        });
+        if (listings.length === 0)
+            return res.status(400).json('We could not find any listings matching your options');
+        res.json(listings);
     }
     catch (error) {
         res.status(400).json(error);
     }
 });
-exports.queryListings = queryListings;
+exports.filterListings = filterListings;

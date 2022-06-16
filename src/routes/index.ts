@@ -29,10 +29,16 @@ import { adminRegister } from '../middleware/users/admins/register'
 import { createListing } from '../middleware/listings/createListing'
 import {saveListing} from '../middleware/listings/saveListing'
 import {apply} from '../middleware/listings/apply'
+import { queryListings } from '../middleware/listings/queryListings'
+import {filterListings} from '../middleware/listings/filterListings'
 
 //* ROUTES
 
 //? GET REQUESTS
+//listings
+router.get('/queryListings', queryListings)
+router.get('/filterListings/:q', filterListings)
+
 //auth
 router.get('/validateToken', requiresAuth, validateToken)
 

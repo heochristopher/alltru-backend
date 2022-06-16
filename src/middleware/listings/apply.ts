@@ -13,7 +13,7 @@ export const apply = async(req: Request, res: Response, next: NextFunction) => {
             lastName: user.lastName,
             affiliation: user.affiliation,
             email: user.email,
-            grade: user.grade,
+            birthday: user.birthday,
             role: user.role,
             avatar: user.avatar,
             note: req.body.note
