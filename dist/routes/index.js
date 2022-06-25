@@ -31,6 +31,7 @@ const apply_1 = require("../middleware/listings/apply");
 const queryListings_1 = require("../middleware/listings/queryListings");
 const filterListings_1 = require("../middleware/listings/filterListings");
 const findListing_1 = require("../middleware/listings/findListing");
+const unsaveListing_1 = require("../middleware/listings/unsaveListing");
 //* ROUTES
 //? GET REQUESTS
 //listings
@@ -62,3 +63,5 @@ router.post('/saveListing/:id', requiresAuth_1.requiresAuth, saveListing_1.saveL
 router.post('/apply/:id', requiresAuth_1.requiresAuth, apply_1.apply);
 //? PATCH REQUESTS
 router.patch('/user/profilePic', requiresAuth_1.requiresAuth, profilePic_1.profilePic);
+//? DELETE REQUESTS
+router.delete('/unsaveListing/:id', requiresAuth_1.requiresAuth, unsaveListing_1.unsaveListing);

@@ -33,6 +33,7 @@ import {apply} from '../middleware/listings/apply'
 import { queryListings } from '../middleware/listings/queryListings'
 import {filterListings} from '../middleware/listings/filterListings'
 import {findListing} from '../middleware/listings/findListing'
+import { unsaveListing } from '../middleware/listings/unsaveListing'
 
 //* ROUTES
 
@@ -75,5 +76,8 @@ router.post('/apply/:id', requiresAuth, apply)
 
 //? PATCH REQUESTS
 router.patch('/user/profilePic', requiresAuth, profilePic)
+
+//? DELETE REQUESTS
+router.delete('/unsaveListing/:id', requiresAuth, unsaveListing)
 
 export {router}

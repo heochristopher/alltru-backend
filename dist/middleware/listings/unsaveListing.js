@@ -9,15 +9,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.queryListings = void 0;
-const Listing_1 = require("../../models/Listing");
-const queryListings = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.unsaveListing = void 0;
+const Role_1 = require("../../models/enums/Role");
+const User_1 = require("../../models/User");
+const unsaveListing = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    if (req.body.payload.role !== Role_1.Role.Student) {
+        return res.status(400).json('Access denied');
+    }
     try {
-        let listings = yield Listing_1.Listing.find().sort({ _id: -1 });
-        res.status(200).json(listings);
+        yield User_1.User.findByIdAndUpdate(req.body.payload._id, { $pull: { savedListings: req.params.id } });
+        res.status(200).send("Unsaved listing.");
     }
     catch (error) {
-        res.status(400).json(error);
+        res.status(400).send(error);
     }
 });
-exports.queryListings = queryListings;
+exports.unsaveListing = unsaveListing;

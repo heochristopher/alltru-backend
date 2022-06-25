@@ -3,7 +3,7 @@ import { Listing } from '../../models/Listing'
 
 export const queryListings = async(req: Request, res: Response, next: NextFunction) => {
     try {
-        let listings = await Listing.find()
+        let listings = await Listing.find().sort({_id:-1})
         res.status(200).json(listings)
     } catch (error) {
         res.status(400).json(error)
