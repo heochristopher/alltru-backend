@@ -8,7 +8,6 @@ import { login } from '../middleware/services/login'
 import { requiresAuth } from '../middleware/services/requiresAuth'
 import { logout } from '../middleware/services/logout'
 import { validateToken } from '../middleware/services/validateToken'
-import { authorizeUser } from '../middleware/services/authorizeUser'
 
 //? users
 import { Role } from '../models/enums/Role'
@@ -18,9 +17,11 @@ import { profilePic } from '../middleware/users/profilePic'
 
 //students
 import { studentRegister } from '../middleware/users/students/register'
+import { searchStudent } from '../middleware/users/students/search'
 
 //organizations
 import { orgRegister } from '../middleware/users/organizations/register'
+import { findOrg } from '../middleware/users/organizations/findOrg'
 
 //admins
 import { adminRegister } from '../middleware/users/admins/register'
@@ -31,6 +32,7 @@ import {saveListing} from '../middleware/listings/saveListing'
 import {apply} from '../middleware/listings/apply'
 import { queryListings } from '../middleware/listings/queryListings'
 import {filterListings} from '../middleware/listings/filterListings'
+import {findListing} from '../middleware/listings/findListing'
 
 //* ROUTES
 
@@ -38,6 +40,7 @@ import {filterListings} from '../middleware/listings/filterListings'
 //listings
 router.get('/queryListings', queryListings)
 router.get('/filterListings/:q', filterListings)
+router.get('/findListing/:q', findListing)
 
 //auth
 router.get('/validateToken', requiresAuth, validateToken)
@@ -47,12 +50,11 @@ router.get('/sendUser', requiresAuth, sendUser)
 router.get('/sendOther/:id',  sendOther)
 
 //student
-//TODO figure out how to send in param of Role.Student
-// router.get('/dashboard', requiresAuth, authorizeUser(Role.Student), sendUserStudent)
+// router.get('/dashboard', requiresAuth, sendUserStudent)
+router.get('/searchStudent/:q', searchStudent)
 
 //organization
-//TODO figure out how to send in param of Role.Org
-// router.get('/dashboard/org', requiresAuth, authorizeUser(Role.Org), sendUserOrg)
+router.get('/findOrg/:q', findOrg)
 
 //? POST REQUESTS
 //logout

@@ -3,6 +3,10 @@ import { Listing } from '../../models/Listing'
 
 export const filterListings = async(req: Request, res: Response, next: NextFunction) => {
     try {
+        if(req.params.q === 'all') {
+            const listings = await Listing.find()
+            return res.json(listings)
+        }
         const params = req.params.q.split('&')
         const searchQuery: any = []
         params.forEach((param) => {

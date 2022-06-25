@@ -13,6 +13,10 @@ exports.filterListings = void 0;
 const Listing_1 = require("../../models/Listing");
 const filterListings = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        if (req.params.q === 'all') {
+            const listings = yield Listing_1.Listing.find();
+            return res.json(listings);
+        }
         const params = req.params.q.split('&');
         const searchQuery = [];
         params.forEach((param) => {

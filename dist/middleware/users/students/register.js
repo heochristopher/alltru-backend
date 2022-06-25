@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.studentRegister = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const schemas_1 = require("../schemas");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const User_1 = require("../../../models/User");
 const Role_1 = require("../../../models/enums/Role");
@@ -30,7 +31,27 @@ const studentRegister = (req, res) => __awaiter(void 0, void 0, void 0, function
         student.password = yield bcryptjs_1.default.hash(req.body.password, 10);
         student.role = Role_1.Role.Student;
         yield student.save();
-        res.status(200).json(`Welcome, ${student.firstName}`);
+        const payload = {
+            _id: student._id,
+            email: student.email,
+            firstName: student.firstName,
+            lastName: student.lastName,
+            role: student.role,
+            affiliation: student.affiliation,
+            avatar: student.avatar,
+            birthday: student.birthday
+        };
+        const userToken = jsonwebtoken_1.default.sign(payload, process.env.PRIVATEKEY);
+        if (req.cookies['auth-token']) {
+            res.clearCookie('auth-token');
+        }
+        res.cookie('auth-token', userToken, {
+            //lasts 2 weeks
+            expires: new Date(new Date().getTime() + 60 * 60 * 24 * 7 * 1000 * 2),
+            secure: true,
+            sameSite: 'none',
+            httpOnly: true
+        }).status(200).json(`Welcome to Alltru, ${student.firstName}`);
     }
     catch (error) {
         res.status(400).json(error);

@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.orgRegister = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_1 = require("../../../models/User");
 const Role_1 = require("../../../models/enums/Role");
 const schemas_1 = require("../schemas");
@@ -30,8 +31,27 @@ const orgRegister = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         org.password = yield bcryptjs_1.default.hash(req.body.password, 10);
         org.role = Role_1.Role.Org;
         yield org.save();
-        //save in shared collection
-        res.status(200).json(`Welcome, ${org.firstName}`);
+        const payload = {
+            _id: org._id,
+            email: org.email,
+            firstName: org.firstName,
+            lastName: org.lastName,
+            role: org.role,
+            affiliation: org.affiliation,
+            avatar: org.avatar,
+            birthday: org.birthday
+        };
+        const userToken = jsonwebtoken_1.default.sign(payload, process.env.PRIVATEKEY);
+        if (req.cookies['auth-token']) {
+            res.clearCookie('auth-token');
+        }
+        res.cookie('auth-token', userToken, {
+            //lasts 2 weeks
+            expires: new Date(new Date().getTime() + 60 * 60 * 24 * 7 * 1000 * 2),
+            secure: true,
+            sameSite: 'none',
+            httpOnly: true
+        }).status(200).json(`Welcome to Alltru, ${org.firstName}`);
     }
     catch (error) {
         res.status(400).json(error);

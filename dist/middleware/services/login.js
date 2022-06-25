@@ -44,8 +44,8 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             res.clearCookie('auth-token');
         }
         res.cookie('auth-token', userToken, {
-            expires: new Date(new Date().getTime() + 60 * 60 * 24 * 7 * 1000),
-            //TODO change to secure: true in prod
+            //lasts 2 weeks
+            expires: new Date(new Date().getTime() + 60 * 60 * 24 * 7 * 1000 * 2),
             secure: true,
             sameSite: 'none',
             httpOnly: true
