@@ -21,7 +21,7 @@ import { searchStudent } from '../middleware/users/students/search'
 
 //organizations
 import { orgRegister } from '../middleware/users/organizations/register'
-import { findOrg } from '../middleware/users/organizations/findOrg'
+import { orgListings } from '../middleware/users/organizations/orgListings'
 
 //admins
 import { adminRegister } from '../middleware/users/admins/register'
@@ -54,7 +54,7 @@ router.get('/sendOther/:id',  sendOther)
 router.get('/searchStudent/:q', searchStudent)
 
 //organization
-router.get('/findOrg/:q', findOrg)
+router.get('/orgListings/:id', orgListings)
 
 //? POST REQUESTS
 //logout

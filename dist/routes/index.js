@@ -21,7 +21,7 @@ const register_1 = require("../middleware/users/students/register");
 const search_1 = require("../middleware/users/students/search");
 //organizations
 const register_2 = require("../middleware/users/organizations/register");
-const findOrg_1 = require("../middleware/users/organizations/findOrg");
+const orgListings_1 = require("../middleware/users/organizations/orgListings");
 //admins
 const register_3 = require("../middleware/users/admins/register");
 //? listings
@@ -46,7 +46,7 @@ router.get('/sendOther/:id', sendOther_1.sendOther);
 // router.get('/dashboard', requiresAuth, sendUserStudent)
 router.get('/searchStudent/:q', search_1.searchStudent);
 //organization
-router.get('/findOrg/:q', findOrg_1.findOrg);
+router.get('/orgListings/:id', orgListings_1.orgListings);
 //? POST REQUESTS
 //logout
 router.post('/logout', logout_1.logout);

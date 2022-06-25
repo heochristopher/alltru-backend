@@ -10,26 +10,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.findStudent = void 0;
+const Role_1 = require("../../../models/enums/Role");
 const User_1 = require("../../../models/User");
-const findStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const findStudent = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const params = req.params.query.split(' ');
-        if (params.length === 0) {
-            return res.status(400).json('Invalid search');
+        const param = req.params.q;
+        const student = yield User_1.User.findById(param);
+        if (student.role !== Role_1.Role.Student) {
+            return res.status(400).json('This user is not a student');
         }
-        if (params.length === 1) {
-            let users = yield User_1.User.find({
-                firstName: params[0]
-            });
-            return res.json(users);
-        }
-        let users = yield User_1.User.find({
-            $and: [
-                { firstName: params[0] },
-                { lastName: params[1] }
-            ]
-        });
-        return res.json(users);
+        res.json(student);
     }
     catch (error) {
         res.status(400).json(error);

@@ -9,20 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.findOrg = void 0;
-const Role_1 = require("../../../models/enums/Role");
-const User_1 = require("../../../models/User");
-const findOrg = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.orgListings = void 0;
+const orgListings = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const param = req.params.q;
-        const org = yield User_1.User.findById(param);
-        if (org.role !== Role_1.Role.Org) {
-            return res.status(400).json('This user is not an organization');
-        }
-        res.json(org);
+        let listings = yield Listing.find();
+        res.status(200).json(listings);
     }
     catch (error) {
         res.status(400).json(error);
     }
 });
-exports.findOrg = findOrg;
+exports.orgListings = orgListings;
