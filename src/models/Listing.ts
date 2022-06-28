@@ -21,10 +21,12 @@ export interface ListingAttributes {
 }
 
 //* sent when students apply, private to org and student only
-export interface Application extends UserToken {
+export interface Application {
+    _id: mongoose.Types.ObjectId,
     note: string
 }
 
+//* sent when students apply, private to org and student only
 export interface StudentListing extends ListingAttributes {
     application: Application
 }

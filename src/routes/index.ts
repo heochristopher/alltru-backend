@@ -18,10 +18,13 @@ import { profilePic } from '../middleware/users/profilePic'
 //students
 import { studentRegister } from '../middleware/users/students/register'
 import { searchStudent } from '../middleware/users/students/search'
+import { sendSaved } from '../middleware/users/students/sendSaved'
+import { sendApplied } from '../middleware/users/students/sendApplied'
 
 //organizations
 import { orgRegister } from '../middleware/users/organizations/register'
 import { orgListings } from '../middleware/users/organizations/orgListings'
+import { sendListings } from '../middleware/users/organizations/sendListings'
 
 //admins
 import { adminRegister } from '../middleware/users/admins/register'
@@ -51,11 +54,13 @@ router.get('/sendUser', requiresAuth, sendUser)
 router.get('/sendOther/:id',  sendOther)
 
 //student
-// router.get('/dashboard', requiresAuth, sendUserStudent)
 router.get('/searchStudent/:q', searchStudent)
+router.get('/sendSaved', requiresAuth, sendSaved)
+router.get('/sendApplied', requiresAuth, sendApplied)
 
 //organization
 router.get('/orgListings/:id', orgListings)
+router.get('/sendListings', requiresAuth, sendListings)
 
 //? POST REQUESTS
 //logout

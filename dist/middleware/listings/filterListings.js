@@ -14,7 +14,7 @@ const Listing_1 = require("../../models/Listing");
 const filterListings = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         if (req.params.q === 'all') {
-            const listings = yield Listing_1.Listing.find();
+            const listings = yield Listing_1.Listing.find().sort({ _id: -1 });
             return res.json(listings);
         }
         const params = req.params.q.split('&');
@@ -33,7 +33,7 @@ const filterListings = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         });
         const listings = yield Listing_1.Listing.find({
             $and: searchQuery
-        });
+        }).sort({ _id: -1 });
         if (listings.length === 0)
             return res.status(400).json('We could not find any listings matching your options');
         res.json(listings);

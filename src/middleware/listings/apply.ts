@@ -9,16 +9,9 @@ export const apply = async(req: Request, res: Response, next: NextFunction) => {
         const user = req.body.payload
         const applicant: Application = {
             _id: user._id,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            affiliation: user.affiliation,
-            email: user.email,
-            birthday: user.birthday,
-            role: user.role,
-            avatar: user.avatar,
             note: req.body.note
         }
-        await User.findByIdAndUpdate(user._id, {$push: {appliedListings: req.params.id}})
+        await User.findByIdAndUpdate(user._id, {$push: {appliedListings: {_id: req.params.id, note: req.body.note}}})
         await Listing.findByIdAndUpdate(req.params.id, {$push: {applicants: applicant}})
         res.status(200).send("Application Submitted")
     } catch (error) {

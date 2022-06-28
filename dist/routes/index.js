@@ -19,9 +19,12 @@ const profilePic_1 = require("../middleware/users/profilePic");
 //students
 const register_1 = require("../middleware/users/students/register");
 const search_1 = require("../middleware/users/students/search");
+const sendSaved_1 = require("../middleware/users/students/sendSaved");
+const sendApplied_1 = require("../middleware/users/students/sendApplied");
 //organizations
 const register_2 = require("../middleware/users/organizations/register");
 const orgListings_1 = require("../middleware/users/organizations/orgListings");
+const sendListings_1 = require("../middleware/users/organizations/sendListings");
 //admins
 const register_3 = require("../middleware/users/admins/register");
 //? listings
@@ -44,10 +47,12 @@ router.get('/validateToken', requiresAuth_1.requiresAuth, validateToken_1.valida
 router.get('/sendUser', requiresAuth_1.requiresAuth, sendUser_1.sendUser);
 router.get('/sendOther/:id', sendOther_1.sendOther);
 //student
-// router.get('/dashboard', requiresAuth, sendUserStudent)
 router.get('/searchStudent/:q', search_1.searchStudent);
+router.get('/sendSaved', requiresAuth_1.requiresAuth, sendSaved_1.sendSaved);
+router.get('/sendApplied', requiresAuth_1.requiresAuth, sendApplied_1.sendApplied);
 //organization
 router.get('/orgListings/:id', orgListings_1.orgListings);
+router.get('/sendListings', requiresAuth_1.requiresAuth, sendListings_1.sendListings);
 //? POST REQUESTS
 //logout
 router.post('/logout', logout_1.logout);

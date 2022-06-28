@@ -9,23 +9,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.orgListings = void 0;
+exports.sendApplied = void 0;
+const Role_1 = require("../../../models/enums/Role");
 const Listing_1 = require("../../../models/Listing");
 const User_1 = require("../../../models/User");
-const orgListings = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const sendApplied = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const id = req.params.id;
-        const org = yield User_1.User.findById(id);
+        if (req.body.payload.role !== Role_1.Role.Student) {
+            return res.status(400).json('Only students can have applied listings.');
+        }
+        const user = yield User_1.User.findById(req.body.payload._id);
         const listings = yield Listing_1.Listing.find({
             '_id': {
-                $in: org.createdListings
+                $in: user.appliedListings
             }
         }).sort({ _id: -1 });
-        // console.log(listings)
         res.json(listings);
     }
     catch (error) {
         res.status(400).json(error);
     }
 });
-exports.orgListings = orgListings;
+exports.sendApplied = sendApplied;

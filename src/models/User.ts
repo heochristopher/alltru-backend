@@ -32,8 +32,11 @@ export interface UserProfile extends UserToken {
 export interface StudentInterface extends UserProfile {
     //array of listings that orgs post with public info that the student saved
     savedListings: mongoose.Types.ObjectId[],
-    //array of listings that the student applied for, carries public info + the student's application
-    appliedListings: mongoose.Types.ObjectId[],
+    //array of listings that the student applied for, carries listing id + the student's application
+    appliedListings: {
+        listing: mongoose.Types.ObjectId[],
+        note: string
+    }[],
 }
 
 //* private information, visible to only org on dashboard
