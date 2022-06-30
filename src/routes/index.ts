@@ -14,6 +14,7 @@ import { Role } from '../models/enums/Role'
 import { sendUser } from '../middleware/users/sendUser'
 import { sendOther } from '../middleware/users/sendOther'
 import { profilePic } from '../middleware/users/profilePic'
+import { editProfile } from '../middleware/users/editProfile'
 
 //students
 import { studentRegister } from '../middleware/users/students/register'
@@ -25,6 +26,7 @@ import { sendApplied } from '../middleware/users/students/sendApplied'
 import { orgRegister } from '../middleware/users/organizations/register'
 import { orgListings } from '../middleware/users/organizations/orgListings'
 import { sendListings } from '../middleware/users/organizations/sendListings'
+import { queryApplicants } from '../middleware/users/organizations/queryApplicants'
 
 //admins
 import { adminRegister } from '../middleware/users/admins/register'
@@ -52,6 +54,7 @@ router.get('/validateToken', requiresAuth, validateToken)
 //users
 router.get('/sendUser', requiresAuth, sendUser)
 router.get('/sendOther/:id',  sendOther)
+router.get('/queryApplicants/:id', requiresAuth, queryApplicants)
 
 //student
 router.get('/searchStudent/:q', searchStudent)
@@ -81,6 +84,7 @@ router.post('/apply/:id', requiresAuth, apply)
 
 //? PATCH REQUESTS
 router.patch('/user/profilePic', requiresAuth, profilePic)
+router.patch('/editProfile', requiresAuth, editProfile)
 
 //? DELETE REQUESTS
 router.delete('/unsaveListing/:id', requiresAuth, unsaveListing)

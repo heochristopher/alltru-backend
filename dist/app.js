@@ -21,7 +21,7 @@ app.use(body_parser_1.default.urlencoded({
 }));
 app.use((0, cookie_parser_1.default)());
 app.use((0, cors_1.default)({
-    origin: process.env.ORIGIN,
+    origin: process.env.NODE_ENV === 'production' ? 'https://www.alltru.app' : 'http://localhost:8080',
     credentials: true
 }));
 //raw requests are now usable properties on req.body

@@ -16,6 +16,7 @@ const validateToken_1 = require("../middleware/services/validateToken");
 const sendUser_1 = require("../middleware/users/sendUser");
 const sendOther_1 = require("../middleware/users/sendOther");
 const profilePic_1 = require("../middleware/users/profilePic");
+const editProfile_1 = require("../middleware/users/editProfile");
 //students
 const register_1 = require("../middleware/users/students/register");
 const search_1 = require("../middleware/users/students/search");
@@ -25,6 +26,7 @@ const sendApplied_1 = require("../middleware/users/students/sendApplied");
 const register_2 = require("../middleware/users/organizations/register");
 const orgListings_1 = require("../middleware/users/organizations/orgListings");
 const sendListings_1 = require("../middleware/users/organizations/sendListings");
+const queryApplicants_1 = require("../middleware/users/organizations/queryApplicants");
 //admins
 const register_3 = require("../middleware/users/admins/register");
 //? listings
@@ -46,6 +48,7 @@ router.get('/validateToken', requiresAuth_1.requiresAuth, validateToken_1.valida
 //users
 router.get('/sendUser', requiresAuth_1.requiresAuth, sendUser_1.sendUser);
 router.get('/sendOther/:id', sendOther_1.sendOther);
+router.get('/queryApplicants/:id', requiresAuth_1.requiresAuth, queryApplicants_1.queryApplicants);
 //student
 router.get('/searchStudent/:q', search_1.searchStudent);
 router.get('/sendSaved', requiresAuth_1.requiresAuth, sendSaved_1.sendSaved);
@@ -68,5 +71,6 @@ router.post('/saveListing/:id', requiresAuth_1.requiresAuth, saveListing_1.saveL
 router.post('/apply/:id', requiresAuth_1.requiresAuth, apply_1.apply);
 //? PATCH REQUESTS
 router.patch('/user/profilePic', requiresAuth_1.requiresAuth, profilePic_1.profilePic);
+router.patch('/editProfile', requiresAuth_1.requiresAuth, editProfile_1.editProfile);
 //? DELETE REQUESTS
 router.delete('/unsaveListing/:id', requiresAuth_1.requiresAuth, unsaveListing_1.unsaveListing);
