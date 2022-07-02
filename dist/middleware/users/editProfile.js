@@ -16,9 +16,6 @@ const editProfile = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         if (req.body.biography) {
             yield User_1.User.findByIdAndUpdate(req.body.payload._id, { biography: req.body.biography });
         }
-        if (req.body.affiliation) {
-            yield User_1.User.findByIdAndUpdate(req.body.payload._id, { affiliation: req.body.affiliation });
-        }
         if (req.body.linkedIn || req.body.github) {
             const user = yield User_1.User.findById(req.body.payload._id);
             if (req.body.linkedIn && !req.body.github) {

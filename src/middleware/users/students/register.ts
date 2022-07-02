@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import { User, UserToken } from '../../../models/User'
 import { Role } from '../../../models/enums/Role'
+import { transport } from '../../services/mail'
 dotenv.config()
 
 export const studentRegister = async (req: Request, res: Response) => {
@@ -36,6 +37,19 @@ export const studentRegister = async (req: Request, res: Response) => {
             sameSite: 'none',
             httpOnly: true
         }).status(200).json(`Welcome to Alltru, ${student.firstName}`)
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: student!.email,
+            subject: `Welcome to Alltru, ${student!.firstName}`,
+            html: `We're so excited to have you on board, ${student!.firstName}. Opportunities await <a href="www.alltru.app/listings">here</a>`
+        }
+        transport.sendMail(mailOptions, (error) => {
+            if(error) {
+                return console.log(error)
+            }
+            return console.log('sent')
+        })
+
     } catch (error) {
         res.status(400).json(error)
     }

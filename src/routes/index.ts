@@ -27,6 +27,7 @@ import { orgRegister } from '../middleware/users/organizations/register'
 import { orgListings } from '../middleware/users/organizations/orgListings'
 import { sendListings } from '../middleware/users/organizations/sendListings'
 import { queryApplicants } from '../middleware/users/organizations/queryApplicants'
+import { accept } from '../middleware/users/organizations/accept'
 
 //admins
 import { adminRegister } from '../middleware/users/admins/register'
@@ -62,7 +63,7 @@ router.get('/sendSaved', requiresAuth, sendSaved)
 router.get('/sendApplied', requiresAuth, sendApplied)
 
 //organization
-router.get('/orgListings/:id', orgListings)
+router.get('/orgListings/:q', orgListings)
 router.get('/sendListings', requiresAuth, sendListings)
 
 //? POST REQUESTS
@@ -81,6 +82,7 @@ router.post('/adminRegister', adminRegister)
 router.post('/listing', requiresAuth, createListing)
 router.post('/saveListing/:id', requiresAuth, saveListing)
 router.post('/apply/:id', requiresAuth, apply)
+router.post('/accept/:id', requiresAuth, accept)
 
 //? PATCH REQUESTS
 router.patch('/user/profilePic', requiresAuth, profilePic)

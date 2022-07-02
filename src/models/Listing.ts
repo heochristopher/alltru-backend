@@ -33,7 +33,8 @@ export interface StudentListing extends ListingAttributes {
 
 //* private, only org can see
 export interface OrgListing extends ListingAttributes {
-    applicants: Application[]
+    applicants: Application[],
+    accepted: UserProfile[]
 }
 
 const listingSchema = new Schema({
@@ -48,7 +49,8 @@ const listingSchema = new Schema({
     },
     tags: {type: Array, required: true},
     description: {type: String, required: true},
-    applicants: {type: Array, default: []}
+    applicants: {type: Array, default: []},
+    accepted: {type: Array, default: []}
 })
 
 export const Listing = mongoose.model<OrgListing>

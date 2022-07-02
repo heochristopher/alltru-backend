@@ -37,6 +37,7 @@ const listingSchema = new mongoose_1.Schema({
     },
     tags: { type: Array, required: true },
     description: { type: String, required: true },
-    applicants: { type: Array, default: [] }
+    applicants: { type: Array, default: [] },
+    accepted: { type: Array, default: [] }
 });
 exports.Listing = mongoose_1.default.model('Listing', listingSchema);

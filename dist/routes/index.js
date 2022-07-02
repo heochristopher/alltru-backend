@@ -27,6 +27,7 @@ const register_2 = require("../middleware/users/organizations/register");
 const orgListings_1 = require("../middleware/users/organizations/orgListings");
 const sendListings_1 = require("../middleware/users/organizations/sendListings");
 const queryApplicants_1 = require("../middleware/users/organizations/queryApplicants");
+const accept_1 = require("../middleware/users/organizations/accept");
 //admins
 const register_3 = require("../middleware/users/admins/register");
 //? listings
@@ -54,7 +55,7 @@ router.get('/searchStudent/:q', search_1.searchStudent);
 router.get('/sendSaved', requiresAuth_1.requiresAuth, sendSaved_1.sendSaved);
 router.get('/sendApplied', requiresAuth_1.requiresAuth, sendApplied_1.sendApplied);
 //organization
-router.get('/orgListings/:id', orgListings_1.orgListings);
+router.get('/orgListings/:q', orgListings_1.orgListings);
 router.get('/sendListings', requiresAuth_1.requiresAuth, sendListings_1.sendListings);
 //? POST REQUESTS
 //logout
@@ -69,6 +70,7 @@ router.post('/adminRegister', register_3.adminRegister);
 router.post('/listing', requiresAuth_1.requiresAuth, createListing_1.createListing);
 router.post('/saveListing/:id', requiresAuth_1.requiresAuth, saveListing_1.saveListing);
 router.post('/apply/:id', requiresAuth_1.requiresAuth, apply_1.apply);
+router.post('/accept/:id', requiresAuth_1.requiresAuth, accept_1.accept);
 //? PATCH REQUESTS
 router.patch('/user/profilePic', requiresAuth_1.requiresAuth, profilePic_1.profilePic);
 router.patch('/editProfile', requiresAuth_1.requiresAuth, editProfile_1.editProfile);

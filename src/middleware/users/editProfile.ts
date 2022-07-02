@@ -6,9 +6,6 @@ export const editProfile = async(req: Request, res: Response, next: NextFunction
         if(req.body.biography) {
             await User.findByIdAndUpdate(req.body.payload._id, {biography: req.body.biography})
         }
-        if(req.body.affiliation) {
-            await User.findByIdAndUpdate(req.body.payload._id, {affiliation: req.body.affiliation})
-        }
         if(req.body.linkedIn || req.body.github) {
             const user = await User.findById(req.body.payload._id)
             if(req.body.linkedIn && !req.body.github) {

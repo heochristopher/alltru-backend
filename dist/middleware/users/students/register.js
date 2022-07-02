@@ -19,6 +19,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const User_1 = require("../../../models/User");
 const Role_1 = require("../../../models/enums/Role");
+const mail_1 = require("../../services/mail");
 dotenv_1.default.config();
 const studentRegister = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -52,6 +53,18 @@ const studentRegister = (req, res) => __awaiter(void 0, void 0, void 0, function
             sameSite: 'none',
             httpOnly: true
         }).status(200).json(`Welcome to Alltru, ${student.firstName}`);
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: student.email,
+            subject: `Welcome to Alltru, ${student.firstName}`,
+            html: `We're so excited to have you on board, ${student.firstName}. Opportunities await <a href="www.alltru.app/listings">here</a>`
+        };
+        mail_1.transport.sendMail(mailOptions, (error) => {
+            if (error) {
+                return console.log(error);
+            }
+            return console.log('sent');
+        });
     }
     catch (error) {
         res.status(400).json(error);
