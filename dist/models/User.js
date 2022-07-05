@@ -31,7 +31,7 @@ const userSchema = new mongoose_1.Schema({
     email: { type: String, required: true },
     password: { type: String, required: true },
     role: { type: String, required: true },
-    avatar: { type: String, default: 'https://res.cloudinary.com/heo-christopher/image/upload/v1655399460/profiles/profile_yv13kb.jpg' },
+    avatar: { type: String, default: 'https://res.cloudinary.com/heo-christopher/image/upload/v1657001211/profiles/ozdupx4edlzpsrszwvpi.jpg' },
     affiliation: { type: String, required: true },
     birthday: { type: Date },
     contact: {

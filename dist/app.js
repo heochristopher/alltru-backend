@@ -11,7 +11,7 @@ const index_1 = require("./routes/index");
 require("./DB/mongoose");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-const cloudinary = require("cloudinary").v2;
+const cloudinary_1 = require("cloudinary");
 const app = (0, express_1.default)();
 const port = process.env.PORT;
 // Enable the use of request body parsing middleware
@@ -29,7 +29,7 @@ app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({
     extended: true
 }));
-cloudinary.config({
+cloudinary_1.v2.config({
     cloud_name: process.env.CLOUD_NAME,
     api_key: process.env.API_KEY,
     api_secret: process.env.API_SECRET,

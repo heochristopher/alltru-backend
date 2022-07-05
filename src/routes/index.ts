@@ -15,12 +15,14 @@ import { sendUser } from '../middleware/users/sendUser'
 import { sendOther } from '../middleware/users/sendOther'
 import { profilePic } from '../middleware/users/profilePic'
 import { editProfile } from '../middleware/users/editProfile'
+import {upload} from '../middleware/users/multer'
 
 //students
 import { studentRegister } from '../middleware/users/students/register'
 import { searchStudent } from '../middleware/users/students/search'
 import { sendSaved } from '../middleware/users/students/sendSaved'
 import { sendApplied } from '../middleware/users/students/sendApplied'
+import { uploadResume } from '../middleware/users/students/uploadResume'
 
 //organizations
 import { orgRegister } from '../middleware/users/organizations/register'
@@ -85,7 +87,8 @@ router.post('/apply/:id', requiresAuth, apply)
 router.post('/accept/:id', requiresAuth, accept)
 
 //? PATCH REQUESTS
-router.patch('/user/profilePic', requiresAuth, profilePic)
+router.patch('/profilePic', upload.single('image'), requiresAuth, profilePic)
+router.patch('/uploadResume', upload.single('image'), requiresAuth, uploadResume)
 router.patch('/editProfile', requiresAuth, editProfile)
 
 //? DELETE REQUESTS

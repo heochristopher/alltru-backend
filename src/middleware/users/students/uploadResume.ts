@@ -1,26 +1,23 @@
 import { Request, Response, NextFunction } from 'express'
-import { User } from '../../models/User'
+import { User } from '../../../models/User'
 import dotenv from 'dotenv'
 dotenv.config()
 import { v2 as cloudinary } from 'cloudinary'
+import { Role } from '../../../models/enums/Role'
 
-export const profilePic = async(req: Request, res: Response, next: NextFunction) => {
+export const uploadResume = async(req: Request, res: Response, next: NextFunction) => {
+    if(req.body.payload.role !== Role.Student) {return res.status(400).json('Only students can upload resumes')}
     try {
-        const fileTypes = ['jpg', 'jpeg', 'png', 'heic', 'pdf']
-        if(!fileTypes.includes(req.file!.mimetype.split('/')[1])) {
-            return res.status(400).json('Please upload a .jpg, .jpeg, .heic, .pdf or .png file only')
+        if(req.file!.mimetype.split('/')[1] !== 'pdf') {
+            return res.status(400).json('Please upload a .pdf file only')
         }
         cloudinary.uploader.upload_stream({
-            folder: 'profiles',
-            format: 'jpg',
+            folder: 'resumes',
+            format: 'pdf',
             quality: 'auto',
             fetch_format: 'auto',
-            width: 150,
-            height: 150,
-            radius: 'max',
-            crop: 'fill',
-            gravity: 'face'
-        }, upload).end(req.file!.buffer)
+        }, upload)
+            .end(req.file!.buffer);
 
         async function upload(error: any, result: any) {
             if(error) {
@@ -28,8 +25,9 @@ export const profilePic = async(req: Request, res: Response, next: NextFunction)
             }
             const image = result.secure_url
             await User.findByIdAndUpdate( req.body.payload._id,
-                { $set: { avatar: image }})
+                { $set: { resume: image }})
             res.status(200).json(result)
+
         }
     } catch (error) {
         res.status(400).json(error)
