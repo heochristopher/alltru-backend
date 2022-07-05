@@ -1,7 +1,6 @@
 import mongoose, { Schema, model, connect } from 'mongoose'
 import { Grade } from './enums/Grade'
 import { Role } from './enums/Role'
-import { ListingAttributes, OrgListing, StudentListing } from './Listing'
 
 //* held on the token, sent to orgs on apply, held on frontend user object
 export interface UserToken {
@@ -33,10 +32,7 @@ export interface StudentInterface extends UserProfile {
     //array of listings that orgs post with public info that the student saved
     savedListings: mongoose.Types.ObjectId[],
     //array of listings that the student applied for, carries listing id + the student's application
-    appliedListings: {
-        listing: mongoose.Types.ObjectId[],
-        note: string
-    }[],
+    appliedListings: mongoose.Types.ObjectId[],
 }
 
 //* private information, visible to only org on dashboard

@@ -20,20 +20,10 @@ export interface ListingAttributes {
     description: string,
 }
 
-//* sent when students apply, private to org and student only
-export interface Application {
-    _id: mongoose.Types.ObjectId,
-    note: string
-}
-
-//* sent when students apply, private to org and student only
-export interface StudentListing extends ListingAttributes {
-    application: Application
-}
 
 //* private, only org can see
 export interface OrgListing extends ListingAttributes {
-    applicants: Application[],
+    applicants: mongoose.Types.ObjectId[],
     accepted: UserProfile[]
 }
 

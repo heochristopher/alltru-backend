@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import { Role } from '../../../models/enums/Role'
-import { Listing, StudentListing } from '../../../models/Listing'
+import { Listing } from '../../../models/Listing'
 import { User } from '../../../models/User'
 
 export const sendApplied = async(req: Request, res: Response, next: NextFunction) => {

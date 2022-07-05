@@ -19,12 +19,8 @@ const apply = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
     }
     try {
         const user = req.body.payload;
-        const applicant = {
-            _id: user._id,
-            note: req.body.note
-        };
-        yield User_1.User.findByIdAndUpdate(user._id, { $push: { appliedListings: { _id: req.params.id, note: req.body.note } } });
-        yield Listing_1.Listing.findByIdAndUpdate(req.params.id, { $push: { applicants: applicant } });
+        yield User_1.User.findByIdAndUpdate(user._id, { $push: { appliedListings: req.params.id } });
+        yield Listing_1.Listing.findByIdAndUpdate(req.params.id, { $push: { applicants: user._id } });
         res.status(200).send("Application Submitted");
     }
     catch (error) {
