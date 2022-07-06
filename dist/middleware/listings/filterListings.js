@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.filterListings = void 0;
 const Listing_1 = require("../../models/Listing");
+const User_1 = require("../../models/User");
 const filterListings = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         if (req.params.q === 'all') {
@@ -36,7 +37,21 @@ const filterListings = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         }).sort({ _id: -1 });
         if (listings.length === 0)
             return res.status(400).json('We could not find any listings matching your options');
-        res.json(listings);
+        const data = yield Promise.all(listings.map((listing) => __awaiter(void 0, void 0, void 0, function* () {
+            const { _id, position, type, date, remote, location, tags, description } = listing;
+            const user = yield User_1.User.findById(listing.org);
+            const userData = {
+                _id: user._id,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                affiliation: user.affiliation,
+                avatar: user.avatar,
+                role: user.role,
+            };
+            return { _id, org: userData, position, type, date, remote, location, tags, description };
+        })));
+        res.json(data);
     }
     catch (error) {
         res.status(400).json(error);

@@ -19,7 +19,7 @@ const queryApplicants = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
             return res.status(400).json('Access denied.');
         }
         const listing = yield Listing_1.Listing.findById(req.params.id);
-        if (listing.org._id !== req.body.payload._id) {
+        if (listing.org !== req.body.payload._id) {
             return res.status(400).json('Access denied.');
         }
         const users = yield User_1.User.find({
