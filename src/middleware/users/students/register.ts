@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs'
 import { studentJoi } from '../schemas'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
-import { User, UserToken } from '../../../models/User'
+import { User, UserAttributes, UserToken,  } from '../../../models/User'
 import { Role } from '../../../models/enums/Role'
 import { transport } from '../../services/mail'
 dotenv.config()
@@ -20,13 +20,7 @@ export const studentRegister = async (req: Request, res: Response) => {
         await student.save();
         const payload: UserToken = {
             _id: student!._id,
-            email: student!.email,
-            firstName: student!.firstName,
-            lastName: student!.lastName,
             role: student!.role,
-            affiliation: student!.affiliation,
-            avatar: student!.avatar,
-            birthday: student!.birthday
         }
         const userToken = jwt.sign(payload, process.env.PRIVATEKEY as string)
         if(req.cookies['auth-token']) {res.clearCookie('auth-token')}

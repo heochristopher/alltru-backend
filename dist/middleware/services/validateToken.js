@@ -10,9 +10,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.validateToken = void 0;
+const User_1 = require("../../models/User");
 const validateToken = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.send(req.body.payload);
+        const user = yield User_1.User.findById(req.body.payload._id);
+        const payload = {
+            _id: user._id,
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            affiliation: user.affiliation,
+            avatar: user.avatar,
+            role: user.role,
+        };
+        res.send(payload);
     }
     catch (error) {
         res.status(400).json(error);

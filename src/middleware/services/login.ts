@@ -15,13 +15,7 @@ export const login = async (req: Request, res: Response) => {
         if (!validPassword) { return res.status(400).json('Invalid Password')}
         const payload: UserToken = {
             _id: existingUser!._id,
-            email: existingUser!.email,
-            firstName: existingUser!.firstName,
-            lastName: existingUser!.lastName,
             role: existingUser!.role,
-            affiliation: existingUser!.affiliation,
-            avatar: existingUser!.avatar,
-            birthday: existingUser!.birthday
         }
         const userToken = jwt.sign(payload, process.env.PRIVATEKEY as string)
         if(req.cookies['auth-token']) {res.clearCookie('auth-token')}

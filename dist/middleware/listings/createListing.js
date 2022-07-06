@@ -26,7 +26,7 @@ const createListing = (req, res, next) => __awaiter(void 0, void 0, void 0, func
     }
     try {
         const listing = new Listing_1.Listing({
-            org: req.body.payload,
+            org: req.body.payload._id,
             position: req.body.position,
             type: req.body.type,
             date: Date.now(),

@@ -22,7 +22,7 @@ const accept = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
         const params = req.params.q.split('&');
         const student = yield User_1.User.findById(params[1]);
         yield Listing_1.Listing.findByIdAndUpdate(params[0], {
-            $push: { accepted: student }
+            $push: { accepted: student._id }
         });
         res.status(200).send(`Accepted student ${student.firstName} ${student.lastName}`);
     }

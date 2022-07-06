@@ -13,7 +13,7 @@ export const createListing = async(req: Request, res: Response, next: NextFuncti
     }
     try {
         const listing = new Listing({
-            org: req.body.payload,
+            org: req.body.payload._id,
             position: req.body.position,
             type: req.body.type,
             date: Date.now(),

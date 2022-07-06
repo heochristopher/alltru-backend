@@ -1,22 +1,24 @@
 import mongoose, { Schema, model, connect } from 'mongoose'
-import { Grade } from './enums/Grade'
 import { Role } from './enums/Role'
 
-//* held on the token, sent to orgs on apply, held on frontend user object
+//* held on the token, 
 export interface UserToken {
     _id: mongoose.Types.ObjectId
+    role: Role,
+}
+
+//* sent to orgs on apply, held on frontend user object
+export interface UserAttributes extends UserToken {
     firstName: string,
     lastName: string,
-    email: string,
-    role: Role,
-    avatar: string,
     affiliation: string,
-    // grade?: Grade,
+    email: string,
+    avatar: string,
     birthday?: Date,
 }
 
 //* retrieved on profile visit, public to all
-export interface UserProfile extends UserToken {
+export interface UserProfile extends UserAttributes {
     contact: {
         github: string,
         linkedIn: string

@@ -34,13 +34,7 @@ const studentRegister = (req, res) => __awaiter(void 0, void 0, void 0, function
         yield student.save();
         const payload = {
             _id: student._id,
-            email: student.email,
-            firstName: student.firstName,
-            lastName: student.lastName,
             role: student.role,
-            affiliation: student.affiliation,
-            avatar: student.avatar,
-            birthday: student.birthday
         };
         const userToken = jsonwebtoken_1.default.sign(payload, process.env.PRIVATEKEY);
         if (req.cookies['auth-token']) {

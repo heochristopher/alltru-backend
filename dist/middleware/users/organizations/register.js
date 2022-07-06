@@ -33,13 +33,7 @@ const orgRegister = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         yield org.save();
         const payload = {
             _id: org._id,
-            email: org.email,
-            firstName: org.firstName,
-            lastName: org.lastName,
             role: org.role,
-            affiliation: org.affiliation,
-            avatar: org.avatar,
-            birthday: org.birthday
         };
         const userToken = jsonwebtoken_1.default.sign(payload, process.env.PRIVATEKEY);
         if (req.cookies['auth-token']) {

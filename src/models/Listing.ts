@@ -1,15 +1,13 @@
 import mongoose, { Schema, model, connect } from 'mongoose'
 import {ListingType} from './enums/ListingType'
-import { UserProfile, UserToken } from './User'
-// import { Status } from './enums/Status'
+import { UserAttributes, UserProfile, UserToken, } from './User'
 
 //* public to all
 export interface ListingAttributes {
-    org: UserProfile,
+    _id: mongoose.Types.ObjectId,
+    org: UserAttributes | mongoose.Types.ObjectId,
     position: string,
     type: ListingType
-    //? should listings be deleted after they are filled
-    // status: Status.Vacant,
     date: Date,
     remote: boolean,
     location?: {
@@ -20,15 +18,14 @@ export interface ListingAttributes {
     description: string,
 }
 
-
 //* private, only org can see
 export interface OrgListing extends ListingAttributes {
     applicants: mongoose.Types.ObjectId[],
-    accepted: UserProfile[]
+    accepted: mongoose.Types.ObjectId[]
 }
 
 const listingSchema = new Schema({
-    org: {type: Object, required: true},
+    org: {type: String, required: true},
     position: {type: String, required: true},
     type: {type: String, required: true},
     date: {type: Date, required: true},

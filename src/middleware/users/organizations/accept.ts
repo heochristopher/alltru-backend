@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import { Role } from '../../../models/enums/Role'
 import { Listing } from '../../../models/Listing'
-import { User, UserToken } from '../../../models/User'
+import { User,  } from '../../../models/User'
 
 
 export const accept = async(req: Request, res: Response, next: NextFunction) => {
@@ -11,7 +11,7 @@ export const accept = async(req: Request, res: Response, next: NextFunction) => 
         const params = req.params.q.split('&')
         const student = await User.findById(params[1])
         await Listing.findByIdAndUpdate(params[0], {
-            $push: {accepted: student}
+            $push: {accepted: student!._id}
         })
         res.status(200).send(`Accepted student ${student!.firstName} ${student!.lastName}`)
     } catch (error) {

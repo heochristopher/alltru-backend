@@ -31,13 +31,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         const payload = {
             _id: existingUser._id,
-            email: existingUser.email,
-            firstName: existingUser.firstName,
-            lastName: existingUser.lastName,
             role: existingUser.role,
-            affiliation: existingUser.affiliation,
-            avatar: existingUser.avatar,
-            birthday: existingUser.birthday
         };
         const userToken = jsonwebtoken_1.default.sign(payload, process.env.PRIVATEKEY);
         if (req.cookies['auth-token']) {

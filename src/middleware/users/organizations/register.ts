@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import bcrypt from 'bcryptjs'
 import dotenv from 'dotenv'
 import jwt from 'jsonwebtoken'
-import { User, UserToken } from '../../../models/User'
+import { User, UserAttributes, UserToken,  } from '../../../models/User'
 import { Role } from '../../../models/enums/Role'
 import { orgJoi } from '../schemas'
 dotenv.config()
@@ -19,13 +19,7 @@ export const orgRegister = async (req: Request, res: Response) => {
         await org.save();
         const payload: UserToken = {
             _id: org!._id,
-            email: org!.email,
-            firstName: org!.firstName,
-            lastName: org!.lastName,
             role: org!.role,
-            affiliation: org!.affiliation,
-            avatar: org!.avatar,
-            birthday: org!.birthday
         }
         const userToken = jwt.sign(payload, process.env.PRIVATEKEY as string)
         if(req.cookies['auth-token']) {res.clearCookie('auth-token')}
