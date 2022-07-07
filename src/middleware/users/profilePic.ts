@@ -29,7 +29,7 @@ export const profilePic = async(req: Request, res: Response, next: NextFunction)
             const image = result.secure_url
             await User.findByIdAndUpdate( req.body.payload._id,
                 { $set: { avatar: image }})
-            res.status(200).json(result)
+            res.status(200).json('Successfully updated profile picture')
         }
     } catch (error) {
         res.status(400).json(error)

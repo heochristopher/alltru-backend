@@ -24,7 +24,21 @@ const sendApplied = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
                 $in: user.appliedListings
             }
         }).sort({ _id: -1 });
-        res.json(listings);
+        const data = yield Promise.all(listings.map((listing) => __awaiter(void 0, void 0, void 0, function* () {
+            const { _id, position, type, date, remote, location, tags, description } = listing;
+            const user = yield User_1.User.findById(listing.org);
+            const userData = {
+                _id: user._id,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                affiliation: user.affiliation,
+                avatar: user.avatar,
+                role: user.role,
+            };
+            return { _id, org: userData, position, type, date, remote, location, tags, description };
+        })));
+        res.json(data);
     }
     catch (error) {
         res.status(400).json(error);

@@ -41,7 +41,7 @@ const profilePic = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
                 }
                 const image = result.secure_url;
                 yield User_1.User.findByIdAndUpdate(req.body.payload._id, { $set: { avatar: image } });
-                res.status(200).json(result);
+                res.status(200).json('Successfully updated profile picture');
             });
         }
     }

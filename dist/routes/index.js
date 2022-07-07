@@ -57,7 +57,7 @@ router.get('/searchStudent/:q', search_1.searchStudent);
 router.get('/sendSaved', requiresAuth_1.requiresAuth, sendSaved_1.sendSaved);
 router.get('/sendApplied', requiresAuth_1.requiresAuth, sendApplied_1.sendApplied);
 //organization
-router.get('/orgListings/:q', orgListings_1.orgListings);
+router.get('/orgListings/:id', orgListings_1.orgListings);
 router.get('/sendListings', requiresAuth_1.requiresAuth, sendListings_1.sendListings);
 //? POST REQUESTS
 //logout

@@ -65,7 +65,7 @@ router.get('/sendSaved', requiresAuth, sendSaved)
 router.get('/sendApplied', requiresAuth, sendApplied)
 
 //organization
-router.get('/orgListings/:q', orgListings)
+router.get('/orgListings/:id', orgListings)
 router.get('/sendListings', requiresAuth, sendListings)
 
 //? POST REQUESTS

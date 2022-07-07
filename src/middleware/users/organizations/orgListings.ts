@@ -24,6 +24,7 @@ export const orgListings = async(req: Request, res: Response, next: NextFunction
             }
             return {_id, org: userData, position, type, date, remote, location, tags, description}
         }))
+        console.log(data)
         res.json(data)
     } catch (error) {
         res.status(400).json(error)

@@ -34,6 +34,7 @@ const orgListings = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
             };
             return { _id, org: userData, position, type, date, remote, location, tags, description };
         })));
+        console.log(data);
         res.json(data);
     }
     catch (error) {
