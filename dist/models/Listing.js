@@ -25,6 +25,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Listing = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
+const Status_1 = require("./enums/Status");
 const listingSchema = new mongoose_1.Schema({
     org: { type: String, required: true },
     position: { type: String, required: true },
@@ -37,7 +38,7 @@ const listingSchema = new mongoose_1.Schema({
     },
     tags: { type: Array, required: true },
     description: { type: String, required: true },
+    status: { type: String, default: Status_1.Status.Open },
     applicants: { type: Array, default: [] },
-    accepted: { type: Array, default: [] }
 });
 exports.Listing = mongoose_1.default.model('Listing', listingSchema);

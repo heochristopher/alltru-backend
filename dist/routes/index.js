@@ -29,7 +29,7 @@ const register_2 = require("../middleware/users/organizations/register");
 const orgListings_1 = require("../middleware/users/organizations/orgListings");
 const sendListings_1 = require("../middleware/users/organizations/sendListings");
 const queryApplicants_1 = require("../middleware/users/organizations/queryApplicants");
-const accept_1 = require("../middleware/users/organizations/accept");
+// import { accept } from '../middleware/users/organizations/accept'
 //admins
 const register_3 = require("../middleware/users/admins/register");
 //? listings
@@ -72,7 +72,7 @@ router.post('/adminRegister', register_3.adminRegister);
 router.post('/listing', requiresAuth_1.requiresAuth, createListing_1.createListing);
 router.post('/saveListing/:id', requiresAuth_1.requiresAuth, saveListing_1.saveListing);
 router.post('/apply/:id', requiresAuth_1.requiresAuth, apply_1.apply);
-router.post('/accept/:id', requiresAuth_1.requiresAuth, accept_1.accept);
+// router.post('/accept/:id', requiresAuth, accept)
 //? PATCH REQUESTS
 router.patch('/profilePic', multer_1.upload.single('image'), requiresAuth_1.requiresAuth, profilePic_1.profilePic);
 router.patch('/uploadResume', multer_1.upload.single('image'), requiresAuth_1.requiresAuth, uploadResume_1.uploadResume);

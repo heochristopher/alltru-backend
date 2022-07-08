@@ -40,7 +40,8 @@ const findListing = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
                 remote: listing.remote,
                 tags: listing.tags,
                 description: listing.description,
-                location: listing.location
+                location: listing.location,
+                status: listing.status
             };
             return res.json(data);
         }
@@ -55,7 +56,8 @@ const findListing = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
                 remote: listing.remote,
                 tags: listing.tags,
                 description: listing.description,
-                location: listing.location
+                location: listing.location,
+                status: listing.status
             };
             return res.json(data);
         }
@@ -70,8 +72,8 @@ const findListing = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
                 tags: listing.tags,
                 description: listing.description,
                 location: listing.location,
+                status: listing.status,
                 applicants: listing.applicants,
-                accepted: listing.accepted,
             };
             return res.json(data);
         }

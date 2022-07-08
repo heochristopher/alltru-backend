@@ -27,7 +27,8 @@ export const findListing = async(req: Request, res: Response, next: NextFunction
                 remote: listing!.remote,
                 tags: listing!.tags,
                 description: listing!.description,
-                location: listing!.location
+                location: listing!.location,
+                status: listing!.status
             }
             return res.json(data)
         }
@@ -42,7 +43,8 @@ export const findListing = async(req: Request, res: Response, next: NextFunction
                 remote: listing!.remote,
                 tags: listing!.tags,
                 description: listing!.description,
-                location: listing!.location
+                location: listing!.location,
+                status: listing!.status
             }
             return res.json(data)
         } else if(user._id === org!._id.toString()) {
@@ -56,8 +58,8 @@ export const findListing = async(req: Request, res: Response, next: NextFunction
                 tags: listing!.tags,
                 description: listing!.description,
                 location: listing!.location,
+                status: listing!.status,
                 applicants: listing!.applicants,
-                accepted: listing!.accepted,
             }
             return res.json(data)
         }

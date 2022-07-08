@@ -13,12 +13,17 @@ exports.apply = void 0;
 const Role_1 = require("../../models/enums/Role");
 const User_1 = require("../../models/User");
 const Listing_1 = require("../../models/Listing");
+const Status_1 = require("../../models/enums/Status");
 const apply = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.body.payload.role !== Role_1.Role.Student) {
         return res.status(400).json('You cannot apply to listings');
     }
     try {
         const user = req.body.payload;
+        const listing = yield Listing_1.Listing.findById(req.params.id);
+        if (listing.status === Status_1.Status.Closed) {
+            return res.status(400).json('This listing is already closed');
+        }
         yield User_1.User.findByIdAndUpdate(user._id, { $push: { appliedListings: req.params.id } });
         yield Listing_1.Listing.findByIdAndUpdate(req.params.id, { $push: { applicants: user._id } });
         res.status(200).send("Application Submitted");

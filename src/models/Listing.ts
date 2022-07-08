@@ -1,6 +1,7 @@
 import mongoose, { Schema, model, connect } from 'mongoose'
 import {ListingType} from './enums/ListingType'
 import { UserAttributes, UserProfile, UserToken, } from './User'
+import { Status } from './enums/Status'
 
 //* public to all
 export interface ListingAttributes {
@@ -16,12 +17,12 @@ export interface ListingAttributes {
     },
     tags: string[],
     description: string,
+    status: Status
 }
 
 //* private, only org can see
 export interface OrgListing extends ListingAttributes {
     applicants: mongoose.Types.ObjectId[],
-    accepted: mongoose.Types.ObjectId[]
 }
 
 const listingSchema = new Schema({
@@ -36,8 +37,8 @@ const listingSchema = new Schema({
     },
     tags: {type: Array, required: true},
     description: {type: String, required: true},
+    status: {type: String, default: Status.Open},
     applicants: {type: Array, default: []},
-    accepted: {type: Array, default: []}
 })
 
 export const Listing = mongoose.model<OrgListing>

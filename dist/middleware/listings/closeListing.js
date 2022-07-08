@@ -9,20 +9,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.rejectApplicant = void 0;
-const Role_1 = require("../../../models/enums/Role");
-const rejectApplicant = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    if (req.body.payload.role !== Role_1.Role.Org) {
-        return res.status(400).json('You cannot access this resource');
+exports.closeListing = void 0;
+const Role_1 = require("../../models/enums/Role");
+const Status_1 = require("../../models/enums/Status");
+const Listing_1 = require("../../models/Listing");
+const closeListing = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    if (req.body.payload.role === Role_1.Role.Student) {
+        return res.status(400).json('Students cannot close listings');
     }
     try {
-        const user = req.body.payload;
-        yield User.findByIdAndUpdate(user._id, { $push: { appliedListings: req.params.id } });
-        yield Listing.findByIdAndUpdate(req.params.id, { $push: { applicants: user._id } });
-        res.status(200).send("Application Submitted");
+        const listing = yield Listing_1.Listing.findByIdAndUpdate(req.params.id, { $set: { status: Status_1.Status.Closed } });
+        res.status(200).json('Successfully closed listing');
     }
     catch (error) {
-        res.status(400).send(error);
+        console.log(error);
+        res.status(400).json(error);
     }
 });
-exports.rejectApplicant = rejectApplicant;
+exports.closeListing = closeListing;

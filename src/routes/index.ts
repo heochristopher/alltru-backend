@@ -29,7 +29,7 @@ import { orgRegister } from '../middleware/users/organizations/register'
 import { orgListings } from '../middleware/users/organizations/orgListings'
 import { sendListings } from '../middleware/users/organizations/sendListings'
 import { queryApplicants } from '../middleware/users/organizations/queryApplicants'
-import { accept } from '../middleware/users/organizations/accept'
+// import { accept } from '../middleware/users/organizations/accept'
 
 //admins
 import { adminRegister } from '../middleware/users/admins/register'
@@ -84,7 +84,7 @@ router.post('/adminRegister', adminRegister)
 router.post('/listing', requiresAuth, createListing)
 router.post('/saveListing/:id', requiresAuth, saveListing)
 router.post('/apply/:id', requiresAuth, apply)
-router.post('/accept/:id', requiresAuth, accept)
+// router.post('/accept/:id', requiresAuth, accept)
 
 //? PATCH REQUESTS
 router.patch('/profilePic', upload.single('image'), requiresAuth, profilePic)

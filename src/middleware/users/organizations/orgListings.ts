@@ -12,7 +12,7 @@ export const orgListings = async(req: Request, res: Response, next: NextFunction
             }
         }).sort({_id:-1})
         const data: ListingAttributes[] = await Promise.all(listings.map( async(listing) => {
-            const {_id, position, type, date, remote, location, tags, description} = listing
+            const {_id, position, type, date, remote, location, tags, description, status} = listing
             const userData: UserAttributes = {
                 _id: org!._id,
                 email: org!.email,
@@ -22,7 +22,7 @@ export const orgListings = async(req: Request, res: Response, next: NextFunction
                 avatar: org!.avatar,
                 role: org!.role,
             }
-            return {_id, org: userData, position, type, date, remote, location, tags, description}
+            return {_id, org: userData, position, type, date, remote, location, tags, description, status}
         }))
         console.log(data)
         res.json(data)

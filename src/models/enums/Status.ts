@@ -1,4 +1,4 @@
 export enum Status{
-    Vacant = 'Vacant',
-    Filled = 'Filled',
+    Open = 'Open',
+    Closed = 'Closed',
 }
