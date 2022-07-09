@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken'
 import { User, UserAttributes, UserToken,  } from '../../../models/User'
 import { Role } from '../../../models/enums/Role'
 import { orgJoi } from '../schemas'
+import { transport } from '../../services/mail'
 dotenv.config()
 
 export const orgRegister = async (req: Request, res: Response) => {
@@ -27,9 +28,16 @@ export const orgRegister = async (req: Request, res: Response) => {
             //lasts 2 weeks
             expires: new Date(new Date().getTime() + 60 * 60 * 24 * 7 * 1000 * 2),
             secure: true,
-            sameSite: 'none',
+            sameSite: 'strict',
             httpOnly: true
         }).status(200).json(`Welcome to Alltru, ${org.firstName}`)
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: org!.email,
+            subject: `Welcome to Alltru, ${org!.firstName}!`,
+            html: `We're so excited to have you on board, ${org!.firstName}. Create your first listing <a href="www.alltru.app/create-listing">here</a>`
+        }
+        transport.sendMail(mailOptions)
     } catch (error) {
         res.status(400).json(error)
     }

@@ -23,7 +23,7 @@ export const login = async (req: Request, res: Response) => {
             //lasts 2 weeks
             expires: new Date(new Date().getTime() + 60 * 60 * 24 * 7 * 1000 * 2),
             secure: true,
-            sameSite: 'none',
+            sameSite: 'strict',
             httpOnly: true
         }).status(200).json('You have successfully logged in.')
     } catch (error) {

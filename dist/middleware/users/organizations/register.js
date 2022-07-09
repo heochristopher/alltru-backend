@@ -19,6 +19,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_1 = require("../../../models/User");
 const Role_1 = require("../../../models/enums/Role");
 const schemas_1 = require("../schemas");
+const mail_1 = require("../../services/mail");
 dotenv_1.default.config();
 const orgRegister = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -43,9 +44,16 @@ const orgRegister = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             //lasts 2 weeks
             expires: new Date(new Date().getTime() + 60 * 60 * 24 * 7 * 1000 * 2),
             secure: true,
-            sameSite: 'none',
+            sameSite: 'strict',
             httpOnly: true
         }).status(200).json(`Welcome to Alltru, ${org.firstName}`);
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: org.email,
+            subject: `Welcome to Alltru, ${org.firstName}!`,
+            html: `We're so excited to have you on board, ${org.firstName}. Create your first listing <a href="www.alltru.app/create-listing">here</a>`
+        };
+        mail_1.transport.sendMail(mailOptions);
     }
     catch (error) {
         res.status(400).json(error);

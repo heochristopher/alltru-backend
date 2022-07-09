@@ -18,11 +18,10 @@ const closeListing = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
         return res.status(400).json('Students cannot close listings');
     }
     try {
-        const listing = yield Listing_1.Listing.findByIdAndUpdate(req.params.id, { $set: { status: Status_1.Status.Closed } });
+        yield Listing_1.Listing.findByIdAndUpdate(req.body.id, { $set: { status: Status_1.Status.Closed } });
         res.status(200).json('Successfully closed listing');
     }
     catch (error) {
-        console.log(error);
         res.status(400).json(error);
     }
 });

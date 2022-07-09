@@ -42,6 +42,7 @@ import { queryListings } from '../middleware/listings/queryListings'
 import {filterListings} from '../middleware/listings/filterListings'
 import {findListing} from '../middleware/listings/findListing'
 import { unsaveListing } from '../middleware/listings/unsaveListing'
+import { closeListing } from '../middleware/listings/closeListing'
 
 //* ROUTES
 
@@ -90,6 +91,7 @@ router.post('/apply/:id', requiresAuth, apply)
 router.patch('/profilePic', upload.single('image'), requiresAuth, profilePic)
 router.patch('/uploadResume', upload.single('image'), requiresAuth, uploadResume)
 router.patch('/editProfile', requiresAuth, editProfile)
+router.patch('/closeListing', requiresAuth, closeListing)
 
 //? DELETE REQUESTS
 router.delete('/unsaveListing/:id', requiresAuth, unsaveListing)

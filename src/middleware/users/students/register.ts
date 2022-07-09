@@ -28,22 +28,16 @@ export const studentRegister = async (req: Request, res: Response) => {
             //lasts 2 weeks
             expires: new Date(new Date().getTime() + 60 * 60 * 24 * 7 * 1000 * 2),
             secure: true,
-            sameSite: 'none',
+            sameSite: 'strict',
             httpOnly: true
         }).status(200).json(`Welcome to Alltru, ${student.firstName}`)
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: student!.email,
-            subject: `Welcome to Alltru, ${student!.firstName}`,
+            subject: `Welcome to Alltru, ${student!.firstName}!`,
             html: `We're so excited to have you on board, ${student!.firstName}. Opportunities await <a href="www.alltru.app/listings">here</a>`
         }
-        transport.sendMail(mailOptions, (error) => {
-            if(error) {
-                return console.log(error)
-            }
-            return console.log('sent')
-        })
-
+        transport.sendMail(mailOptions)
     } catch (error) {
         res.status(400).json(error)
     }
