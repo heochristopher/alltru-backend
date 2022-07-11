@@ -45,7 +45,8 @@ const orgRegister = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             expires: new Date(new Date().getTime() + 60 * 60 * 24 * 7 * 1000 * 2),
             secure: true,
             sameSite: 'strict',
-            httpOnly: true
+            httpOnly: true,
+            domain: 'alltru.app'
         }).status(200).json(`Welcome to Alltru, ${org.firstName}`);
         const mailOptions = {
             from: process.env.EMAIL_USER,

@@ -23,6 +23,7 @@ import { searchStudent } from '../middleware/users/students/search'
 import { sendSaved } from '../middleware/users/students/sendSaved'
 import { sendApplied } from '../middleware/users/students/sendApplied'
 import { uploadResume } from '../middleware/users/students/uploadResume'
+import { deleteResume } from '../middleware/users/students/deleteResume'
 
 //organizations
 import { orgRegister } from '../middleware/users/organizations/register'
@@ -90,6 +91,7 @@ router.post('/apply/:id', requiresAuth, apply)
 //? PATCH REQUESTS
 router.patch('/profilePic', upload.single('image'), requiresAuth, profilePic)
 router.patch('/uploadResume', upload.single('image'), requiresAuth, uploadResume)
+router.patch('/deleteResume', requiresAuth, deleteResume)
 router.patch('/editProfile', requiresAuth, editProfile)
 router.patch('/closeListing', requiresAuth, closeListing)
 

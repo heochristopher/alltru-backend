@@ -24,6 +24,7 @@ const search_1 = require("../middleware/users/students/search");
 const sendSaved_1 = require("../middleware/users/students/sendSaved");
 const sendApplied_1 = require("../middleware/users/students/sendApplied");
 const uploadResume_1 = require("../middleware/users/students/uploadResume");
+const deleteResume_1 = require("../middleware/users/students/deleteResume");
 //organizations
 const register_2 = require("../middleware/users/organizations/register");
 const orgListings_1 = require("../middleware/users/organizations/orgListings");
@@ -77,6 +78,7 @@ router.post('/apply/:id', requiresAuth_1.requiresAuth, apply_1.apply);
 //? PATCH REQUESTS
 router.patch('/profilePic', multer_1.upload.single('image'), requiresAuth_1.requiresAuth, profilePic_1.profilePic);
 router.patch('/uploadResume', multer_1.upload.single('image'), requiresAuth_1.requiresAuth, uploadResume_1.uploadResume);
+router.patch('/deleteResume', requiresAuth_1.requiresAuth, deleteResume_1.deleteResume);
 router.patch('/editProfile', requiresAuth_1.requiresAuth, editProfile_1.editProfile);
 router.patch('/closeListing', requiresAuth_1.requiresAuth, closeListing_1.closeListing);
 //? DELETE REQUESTS

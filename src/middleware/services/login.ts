@@ -24,7 +24,8 @@ export const login = async (req: Request, res: Response) => {
             expires: new Date(new Date().getTime() + 60 * 60 * 24 * 7 * 1000 * 2),
             secure: true,
             sameSite: 'strict',
-            httpOnly: true
+            httpOnly: true,
+            domain: 'alltru.app'
         }).status(200).json('You have successfully logged in.')
     } catch (error) {
         res.status(400).json(error)

@@ -40,7 +40,7 @@ const uploadResume = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
                 }
                 const image = result.secure_url;
                 yield User_1.User.findByIdAndUpdate(req.body.payload._id, { $set: { resume: image } });
-                res.status(200).json(result);
+                res.status(200).json('Successfully updated resume');
             });
         }
     }
