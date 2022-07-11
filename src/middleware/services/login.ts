@@ -25,7 +25,7 @@ export const login = async (req: Request, res: Response) => {
             secure: true,
             sameSite: 'strict',
             httpOnly: true,
-            domain: 'alltru.app'
+            // domain: 'alltru.app'
         }).status(200).json('You have successfully logged in.')
     } catch (error) {
         res.status(400).json(error)

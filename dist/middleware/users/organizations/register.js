@@ -46,7 +46,7 @@ const orgRegister = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             secure: true,
             sameSite: 'strict',
             httpOnly: true,
-            domain: 'alltru.app'
+            // domain: 'alltru.app'
         }).status(200).json(`Welcome to Alltru, ${org.firstName}`);
         const mailOptions = {
             from: process.env.EMAIL_USER,

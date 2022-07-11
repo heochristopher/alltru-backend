@@ -20,8 +20,8 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser())
 
 app.use(cors({ 
-  // origin: process.env.NODE_ENV === 'production' ? 'https://www.alltru.app' : 'http://localhost:8080',
-  origin: 'https://www.alltru.app',
+  origin: process.env.NODE_ENV === 'production' ? 'https://www.alltru.app' : 'http://localhost:8080',
+  // origin: 'https://www.alltru.app',
   credentials: true
 }))
 

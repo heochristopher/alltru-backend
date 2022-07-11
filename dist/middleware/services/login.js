@@ -43,7 +43,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             secure: true,
             sameSite: 'strict',
             httpOnly: true,
-            domain: 'alltru.app'
+            // domain: 'alltru.app'
         }).status(200).json('You have successfully logged in.');
     }
     catch (error) {

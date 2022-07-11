@@ -30,7 +30,7 @@ export const studentRegister = async (req: Request, res: Response) => {
             secure: true,
             sameSite: 'strict',
             httpOnly: true,
-            domain: 'alltru.app'
+            // domain: 'alltru.app'
 
         }).status(200).json(`Welcome to Alltru, ${student.firstName}`)
         const mailOptions = {
