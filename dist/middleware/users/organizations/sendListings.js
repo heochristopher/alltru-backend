@@ -25,7 +25,7 @@ const sendListings = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
             }
         }).sort({ _id: -1 });
         const data = yield Promise.all(listings.map((listing) => __awaiter(void 0, void 0, void 0, function* () {
-            const { _id, position, type, date, remote, location, tags, description } = listing;
+            const { _id, position, type, date, remote, location, tags, description, status, applicants, notifications } = listing;
             const userData = {
                 _id: org._id,
                 email: org.email,
@@ -35,7 +35,7 @@ const sendListings = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
                 avatar: org.avatar,
                 role: org.role,
             };
-            return { _id, org: userData, position, type, date, remote, location, tags, description };
+            return { _id, org: userData, position, type, date, remote, location, tags, description, status, applicants, notifications };
         })));
         res.json(data);
     }

@@ -16,7 +16,21 @@ const filterListings = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     try {
         if (req.params.q === 'all') {
             const listings = yield Listing_1.Listing.find().sort({ _id: -1 });
-            return res.json(listings);
+            const data = yield Promise.all(listings.map((listing) => __awaiter(void 0, void 0, void 0, function* () {
+                const { _id, position, type, date, remote, location, tags, description, status } = listing;
+                const user = yield User_1.User.findById(listing.org);
+                const userData = {
+                    _id: user._id,
+                    email: user.email,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    affiliation: user.affiliation,
+                    avatar: user.avatar,
+                    role: user.role,
+                };
+                return { _id, org: userData, position, type, date, remote, location, tags, description, status };
+            })));
+            return res.json(data);
         }
         const params = req.params.q.split('&');
         const searchQuery = [];
@@ -38,7 +52,7 @@ const filterListings = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         if (listings.length === 0)
             return res.status(400).json('We could not find any listings matching your options');
         const data = yield Promise.all(listings.map((listing) => __awaiter(void 0, void 0, void 0, function* () {
-            const { _id, position, type, date, remote, location, tags, description } = listing;
+            const { _id, position, type, date, remote, location, tags, description, status } = listing;
             const user = yield User_1.User.findById(listing.org);
             const userData = {
                 _id: user._id,
@@ -49,7 +63,7 @@ const filterListings = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
                 avatar: user.avatar,
                 role: user.role,
             };
-            return { _id, org: userData, position, type, date, remote, location, tags, description };
+            return { _id, org: userData, position, type, date, remote, location, tags, description, status };
         })));
         res.json(data);
     }

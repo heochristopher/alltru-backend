@@ -17,6 +17,7 @@ export const sendUser = async (req: Request, res: Response) => {
                 avatar: user!.avatar,
                 affiliation: user!.affiliation,
                 contact: user!.contact,
+                website: user!.website,
                 biography: user!.biography,
                 resume: user!.resume,
                 savedListings: user!.savedListings,
@@ -33,6 +34,7 @@ export const sendUser = async (req: Request, res: Response) => {
                 avatar: user!.avatar,
                 affiliation: user!.affiliation,
                 contact: user!.contact,
+                website: user!.website,
                 biography: user!.biography,
                 resume: user!.resume,
                 listings: user!.listings

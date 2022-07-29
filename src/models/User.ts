@@ -23,6 +23,7 @@ export interface UserProfile extends UserAttributes {
         github: string,
         linkedIn: string
     },
+    website: string,
     biography: string,
     resume: string,
     //for organizations, displays the listings that the org posted with public info
@@ -64,6 +65,7 @@ const userSchema = new Schema({
         github: {type: String, default: null},
         linkedIn: {type: String, default: null}
     },
+    website: {type: String, default: null},
     biography: {type: String, default: null},
     //? host resume on Cloudinary?
     resume: {type: String, default: null},

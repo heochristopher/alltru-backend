@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from 'express'
+ import { Request, Response, NextFunction } from 'express'
 import { Role } from '../../../models/enums/Role'
-import { Listing, ListingAttributes } from '../../../models/Listing'
+import { Listing, OrgListing } from '../../../models/Listing'
 import { OrgInterface, User, UserAttributes } from '../../../models/User'
 
 export const sendListings = async(req: Request, res: Response, next: NextFunction) => {
@@ -12,8 +12,8 @@ export const sendListings = async(req: Request, res: Response, next: NextFunctio
                 $in: org!.createdListings
             }
         }).sort({_id:-1})
-        const data: ListingAttributes[] = await Promise.all(listings.map( async(listing) => {
-            const {_id, position, type, date, remote, location, tags, description} = listing
+        const data: OrgListing[] = await Promise.all(listings.map( async(listing) => {
+            const {_id, position, type, date, remote, location, tags, description, status, applicants, notifications} = listing
             const userData: UserAttributes = {
                 _id: org!._id,
                 email: org!.email,
@@ -23,7 +23,7 @@ export const sendListings = async(req: Request, res: Response, next: NextFunctio
                 avatar: org!.avatar,
                 role: org!.role,
             }
-            return {_id, org: userData, position, type, date, remote, location, tags, description}
+            return {_id, org: userData, position, type, date, remote, location, tags, description, status, applicants, notifications}
         }))
         res.json(data)
     } catch (error) {

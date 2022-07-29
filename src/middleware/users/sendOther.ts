@@ -15,6 +15,7 @@ export const sendOther = async (req: Request, res: Response) => {
             avatar: existingUser!.avatar,
             affiliation: existingUser!.affiliation,
             contact: existingUser!.contact,
+            website: existingUser!.website,
             biography: existingUser!.biography,
             resume: existingUser!.resume,
             createdListings: existingUser!.createdListings,

@@ -9,27 +9,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.apply = void 0;
+exports.readNotification = void 0;
 const Role_1 = require("../../models/enums/Role");
-const User_1 = require("../../models/User");
 const Listing_1 = require("../../models/Listing");
-const Status_1 = require("../../models/enums/Status");
-const apply = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    if (req.body.payload.role !== Role_1.Role.Student) {
-        return res.status(400).json('You cannot apply to listings');
+const readNotification = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    if (req.body.payload.role !== Role_1.Role.Org) {
+        return res.status(400).json('You do not have access to this resource');
     }
     try {
-        const user = req.body.payload;
-        const listing = yield Listing_1.Listing.findById(req.params.id);
-        if (listing.status === Status_1.Status.Closed) {
-            return res.status(400).json('This listing is already closed');
-        }
-        yield User_1.User.findByIdAndUpdate(user._id, { $push: { appliedListings: req.params.id } });
-        yield Listing_1.Listing.findByIdAndUpdate(req.params.id, { $inc: { notifications: 1 } });
-        res.status(200).send("Application Submitted");
+        yield Listing_1.Listing.findByIdAndUpdate(req.params.id, { $set: { notifications: 0 } });
+        res.status(200).json();
     }
     catch (error) {
         res.status(400).send(error);
     }
 });
-exports.apply = apply;
+exports.readNotification = readNotification;

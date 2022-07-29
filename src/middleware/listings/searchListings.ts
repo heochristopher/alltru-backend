@@ -1,18 +1,24 @@
 import { Request, Response, NextFunction } from 'express'
-import { Role } from '../../../models/enums/Role'
-import { Listing, ListingAttributes } from '../../../models/Listing'
-import { User, UserAttributes } from '../../../models/User'
+import { Listing, ListingAttributes } from '../../models/Listing'
+import { User, UserAttributes } from '../../models/User'
 
-export const sendSaved = async(req: Request, res: Response, next: NextFunction) => {
+export const searchListings = async (req: Request, res: Response) => {
     try {
-        if(req.body.payload.role !== Role.Student) {return res.status(400).json('Only students can have saved listings.')}
-        const user = await User.findById(req.body.payload._id)
-        const listings = await Listing.find({
-            '_id': {
-                $in: user!.savedListings
+        const params = req.params.query
+        const listings  = await Listing.aggregate([
+            {
+              '$search': {
+                'index': 'listings',
+                'text': {
+                  'query': params,
+                  'path': {
+                    'wildcard': '*'
+                  }
+                }
+              }
             }
-        }).sort({_id:-1})
-        const data: ListingAttributes[] = await Promise.all(listings.map( async(listing) => {
+          ])
+          const data: ListingAttributes[] = await Promise.all(listings.map( async(listing) => {
             const {_id, position, type, date, remote, location, tags, description, status} = listing
             const user = await User.findById(listing.org)
             const userData: UserAttributes = {
@@ -31,3 +37,4 @@ export const sendSaved = async(req: Request, res: Response, next: NextFunction) 
         res.status(400).json(error)
     }
 }
+ 

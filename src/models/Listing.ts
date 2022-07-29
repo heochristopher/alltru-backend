@@ -23,6 +23,7 @@ export interface ListingAttributes {
 //* private, only org can see
 export interface OrgListing extends ListingAttributes {
     applicants: mongoose.Types.ObjectId[],
+    notifications: number
 }
 
 const listingSchema = new Schema({
@@ -39,6 +40,7 @@ const listingSchema = new Schema({
     description: {type: String, required: true},
     status: {type: String, default: Status.Open},
     applicants: {type: Array, default: []},
+    notifications: {type: Number, default: []}
 })
 
 export const Listing = mongoose.model<OrgListing>

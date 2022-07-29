@@ -6,7 +6,21 @@ export const filterListings = async(req: Request, res: Response, next: NextFunct
     try {
         if(req.params.q === 'all') {
             const listings = await Listing.find().sort({_id:-1})
-            return res.json(listings)
+            const data: ListingAttributes[] = await Promise.all(listings.map( async(listing) => {
+                const {_id, position, type, date, remote, location, tags, description, status} = listing
+                const user = await User.findById(listing.org)
+                const userData: UserAttributes = {
+                    _id: user!._id,
+                    email: user!.email,
+                    firstName: user!.firstName,
+                    lastName: user!.lastName,
+                    affiliation: user!.affiliation,
+                    avatar: user!.avatar,
+                    role: user!.role,
+                }
+                return {_id, org: userData, position, type, date, remote, location, tags, description, status}
+            }))
+            return res.json(data)
         }
         const params = req.params.q.split('&')
         const searchQuery: any = []
@@ -23,7 +37,7 @@ export const filterListings = async(req: Request, res: Response, next: NextFunct
         }).sort({_id:-1})
         if(listings.length === 0) return res.status(400).json('We could not find any listings matching your options')
         const data: ListingAttributes[] = await Promise.all(listings.map( async(listing) => {
-            const {_id, position, type, date, remote, location, tags, description} = listing
+            const {_id, position, type, date, remote, location, tags, description, status} = listing
             const user = await User.findById(listing.org)
             const userData: UserAttributes = {
                 _id: user!._id,
@@ -34,7 +48,7 @@ export const filterListings = async(req: Request, res: Response, next: NextFunct
                 avatar: user!.avatar,
                 role: user!.role,
             }
-            return {_id, org: userData, position, type, date, remote, location, tags, description}
+            return {_id, org: userData, position, type, date, remote, location, tags, description, status}
         }))
         res.json(data)
     } catch (error) {

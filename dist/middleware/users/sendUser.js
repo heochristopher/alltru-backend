@@ -27,6 +27,7 @@ const sendUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 avatar: user.avatar,
                 affiliation: user.affiliation,
                 contact: user.contact,
+                website: user.website,
                 biography: user.biography,
                 resume: user.resume,
                 savedListings: user.savedListings,
@@ -44,6 +45,7 @@ const sendUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 avatar: user.avatar,
                 affiliation: user.affiliation,
                 contact: user.contact,
+                website: user.website,
                 biography: user.biography,
                 resume: user.resume,
                 listings: user.listings

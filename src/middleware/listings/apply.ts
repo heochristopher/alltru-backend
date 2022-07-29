@@ -11,7 +11,7 @@ export const apply = async(req: Request, res: Response, next: NextFunction) => {
         const listing = await Listing.findById(req.params.id)
         if(listing!.status === Status.Closed) {return res.status(400).json('This listing is already closed')}
         await User.findByIdAndUpdate(user._id, {$push: {appliedListings: req.params.id}})
-        await Listing.findByIdAndUpdate(req.params.id, {$push: {applicants: user._id}})
+        await Listing.findByIdAndUpdate(req.params.id, {$inc: {notifications: 1}})
         res.status(200).send("Application Submitted")
     } catch (error) {
         res.status(400).send(error)

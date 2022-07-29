@@ -13,7 +13,7 @@ export const sendApplied = async(req: Request, res: Response, next: NextFunction
             }
         }).sort({_id:-1})
         const data: ListingAttributes[] = await Promise.all(listings.map( async(listing) => {
-            const {_id, position, type, date, remote, location, tags, description} = listing
+            const {_id, position, type, date, remote, location, tags, description, status} = listing
             const user = await User.findById(listing.org)
             const userData: UserAttributes = {
                 _id: user!._id,
@@ -24,7 +24,7 @@ export const sendApplied = async(req: Request, res: Response, next: NextFunction
                 avatar: user!.avatar,
                 role: user!.role,
             }
-            return {_id, org: userData, position, type, date, remote, location, tags, description}
+            return {_id, org: userData, position, type, date, remote, location, tags, description, status}
         }))
         res.json(data)
     } catch (error) {

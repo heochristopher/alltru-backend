@@ -9,21 +9,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendApplied = void 0;
-const Role_1 = require("../../../models/enums/Role");
-const Listing_1 = require("../../../models/Listing");
-const User_1 = require("../../../models/User");
-const sendApplied = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.searchListings = void 0;
+const Listing_1 = require("../../models/Listing");
+const User_1 = require("../../models/User");
+const searchListings = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        if (req.body.payload.role !== Role_1.Role.Student) {
-            return res.status(400).json('Only students can have applied listings.');
-        }
-        const user = yield User_1.User.findById(req.body.payload._id);
-        const listings = yield Listing_1.Listing.find({
-            '_id': {
-                $in: user.appliedListings
+        const params = req.params.query;
+        const listings = yield Listing_1.Listing.aggregate([
+            {
+                '$search': {
+                    'index': 'listings',
+                    'text': {
+                        'query': params,
+                        'path': {
+                            'wildcard': '*'
+                        }
+                    }
+                }
             }
-        }).sort({ _id: -1 });
+        ]);
         const data = yield Promise.all(listings.map((listing) => __awaiter(void 0, void 0, void 0, function* () {
             const { _id, position, type, date, remote, location, tags, description, status } = listing;
             const user = yield User_1.User.findById(listing.org);
@@ -44,4 +48,4 @@ const sendApplied = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         res.status(400).json(error);
     }
 });
-exports.sendApplied = sendApplied;
+exports.searchListings = searchListings;

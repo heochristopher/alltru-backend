@@ -20,7 +20,8 @@ export const createListing = async(req: Request, res: Response, next: NextFuncti
             remote: req.body.remote,
             location: req.body.location,
             description: req.body.description,
-            tags: req.body.tags
+            tags: req.body.tags,
+            notifications: 0
             });
         await listing.save()
         await User.findOneAndUpdate({

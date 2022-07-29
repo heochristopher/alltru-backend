@@ -38,6 +38,7 @@ const userSchema = new mongoose_1.Schema({
         github: { type: String, default: null },
         linkedIn: { type: String, default: null }
     },
+    website: { type: String, default: null },
     biography: { type: String, default: null },
     //? host resume on Cloudinary?
     resume: { type: String, default: null },

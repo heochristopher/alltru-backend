@@ -16,10 +16,11 @@ import { sendOther } from '../middleware/users/sendOther'
 import { profilePic } from '../middleware/users/profilePic'
 import { editProfile } from '../middleware/users/editProfile'
 import {upload} from '../middleware/users/multer'
+import { searchUsers } from '../middleware/users/searchUsers'
 
 //students
 import { studentRegister } from '../middleware/users/students/register'
-import { searchStudent } from '../middleware/users/students/search'
+// import { searchStudent } from '../middleware/users/students/search'
 import { sendSaved } from '../middleware/users/students/sendSaved'
 import { sendApplied } from '../middleware/users/students/sendApplied'
 import { uploadResume } from '../middleware/users/students/uploadResume'
@@ -44,6 +45,8 @@ import {filterListings} from '../middleware/listings/filterListings'
 import {findListing} from '../middleware/listings/findListing'
 import { unsaveListing } from '../middleware/listings/unsaveListing'
 import { closeListing } from '../middleware/listings/closeListing'
+import { readNotification } from '../middleware/listings/readNotification'
+import { searchListings } from '../middleware/listings/searchListings'
 
 //* ROUTES
 
@@ -52,6 +55,7 @@ import { closeListing } from '../middleware/listings/closeListing'
 router.get('/queryListings', queryListings)
 router.get('/filterListings/:q', filterListings)
 router.get('/findListing/:q', findListing)
+router.get('/searchListings/:query', searchListings)
 
 //auth
 router.get('/validateToken', requiresAuth, validateToken)
@@ -60,9 +64,10 @@ router.get('/validateToken', requiresAuth, validateToken)
 router.get('/sendUser', requiresAuth, sendUser)
 router.get('/sendOther/:id',  sendOther)
 router.get('/queryApplicants/:id', requiresAuth, queryApplicants)
+router.get('/searchUsers/:query', searchUsers)
 
 //student
-router.get('/searchStudent/:q', searchStudent)
+// router.get('/searchStudent/:q', searchStudent)
 router.get('/sendSaved', requiresAuth, sendSaved)
 router.get('/sendApplied', requiresAuth, sendApplied)
 
@@ -97,5 +102,6 @@ router.patch('/closeListing', requiresAuth, closeListing)
 
 //? DELETE REQUESTS
 router.delete('/unsaveListing/:id', requiresAuth, unsaveListing)
+router.delete('/readNotification/:id', requiresAuth, readNotification)
 
 export {router}

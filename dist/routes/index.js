@@ -18,9 +18,10 @@ const sendOther_1 = require("../middleware/users/sendOther");
 const profilePic_1 = require("../middleware/users/profilePic");
 const editProfile_1 = require("../middleware/users/editProfile");
 const multer_1 = require("../middleware/users/multer");
+const searchUsers_1 = require("../middleware/users/searchUsers");
 //students
 const register_1 = require("../middleware/users/students/register");
-const search_1 = require("../middleware/users/students/search");
+// import { searchStudent } from '../middleware/users/students/search'
 const sendSaved_1 = require("../middleware/users/students/sendSaved");
 const sendApplied_1 = require("../middleware/users/students/sendApplied");
 const uploadResume_1 = require("../middleware/users/students/uploadResume");
@@ -42,20 +43,24 @@ const filterListings_1 = require("../middleware/listings/filterListings");
 const findListing_1 = require("../middleware/listings/findListing");
 const unsaveListing_1 = require("../middleware/listings/unsaveListing");
 const closeListing_1 = require("../middleware/listings/closeListing");
+const readNotification_1 = require("../middleware/listings/readNotification");
+const searchListings_1 = require("../middleware/listings/searchListings");
 //* ROUTES
 //? GET REQUESTS
 //listings
 router.get('/queryListings', queryListings_1.queryListings);
 router.get('/filterListings/:q', filterListings_1.filterListings);
 router.get('/findListing/:q', findListing_1.findListing);
+router.get('/searchListings/:query', searchListings_1.searchListings);
 //auth
 router.get('/validateToken', requiresAuth_1.requiresAuth, validateToken_1.validateToken);
 //users
 router.get('/sendUser', requiresAuth_1.requiresAuth, sendUser_1.sendUser);
 router.get('/sendOther/:id', sendOther_1.sendOther);
 router.get('/queryApplicants/:id', requiresAuth_1.requiresAuth, queryApplicants_1.queryApplicants);
+router.get('/searchUsers/:query', searchUsers_1.searchUsers);
 //student
-router.get('/searchStudent/:q', search_1.searchStudent);
+// router.get('/searchStudent/:q', searchStudent)
 router.get('/sendSaved', requiresAuth_1.requiresAuth, sendSaved_1.sendSaved);
 router.get('/sendApplied', requiresAuth_1.requiresAuth, sendApplied_1.sendApplied);
 //organization
@@ -83,3 +88,4 @@ router.patch('/editProfile', requiresAuth_1.requiresAuth, editProfile_1.editProf
 router.patch('/closeListing', requiresAuth_1.requiresAuth, closeListing_1.closeListing);
 //? DELETE REQUESTS
 router.delete('/unsaveListing/:id', requiresAuth_1.requiresAuth, unsaveListing_1.unsaveListing);
+router.delete('/readNotification/:id', requiresAuth_1.requiresAuth, readNotification_1.readNotification);
