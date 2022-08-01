@@ -46,6 +46,7 @@ const findListing = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
             return res.json(data);
         }
         const user = jsonwebtoken_1.default.verify(req.cookies['auth-token'], process.env.PRIVATEKEY);
+        console.log(user._id);
         if (user._id !== org._id.toString()) {
             const data = {
                 _id: listing._id,
@@ -74,6 +75,7 @@ const findListing = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
                 location: listing.location,
                 status: listing.status,
                 applicants: listing.applicants,
+                notifications: listing.notifications
             };
             return res.json(data);
         }

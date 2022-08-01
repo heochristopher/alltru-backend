@@ -34,7 +34,8 @@ const createListing = (req, res, next) => __awaiter(void 0, void 0, void 0, func
             location: req.body.location,
             description: req.body.description,
             tags: req.body.tags,
-            notifications: 0
+            notifications: 0,
+            supplementals: req.body.supplementals
         });
         yield listing.save();
         yield User_1.User.findOneAndUpdate({

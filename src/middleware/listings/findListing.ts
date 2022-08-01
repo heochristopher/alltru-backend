@@ -32,7 +32,8 @@ export const findListing = async(req: Request, res: Response, next: NextFunction
             }
             return res.json(data)
         }
-        const user = jwt.verify(req.cookies['auth-token'], process.env.PRIVATEKEY as string)
+        const user: any = jwt.verify(req.cookies['auth-token'], process.env.PRIVATEKEY as string)
+        console.log(user._id)
         if(user._id !== org!._id.toString()) {
             const data: ListingAttributes = {
                 _id: listing!._id,
@@ -60,6 +61,7 @@ export const findListing = async(req: Request, res: Response, next: NextFunction
                 location: listing!.location,
                 status: listing!.status,
                 applicants: listing!.applicants,
+                notifications: listing!.notifications
             }
             return res.json(data)
         }

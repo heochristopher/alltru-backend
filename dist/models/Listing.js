@@ -40,6 +40,7 @@ const listingSchema = new mongoose_1.Schema({
     description: { type: String, required: true },
     status: { type: String, default: Status_1.Status.Open },
     applicants: { type: Array, default: [] },
-    notifications: { type: Number, default: [] }
+    notifications: { type: Number, default: [] },
+    supplementals: { type: Array, default: [] }
 });
 exports.Listing = mongoose_1.default.model('Listing', listingSchema);

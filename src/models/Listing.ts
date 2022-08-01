@@ -2,6 +2,12 @@ import mongoose, { Schema, model, connect } from 'mongoose'
 import {ListingType} from './enums/ListingType'
 import { UserAttributes, UserProfile, UserToken, } from './User'
 import { Status } from './enums/Status'
+import { Input } from './enums/Input'
+
+export interface Supplemental {
+    prompt: string,
+    input: Input
+}
 
 //* public to all
 export interface ListingAttributes {
@@ -17,7 +23,8 @@ export interface ListingAttributes {
     },
     tags: string[],
     description: string,
-    status: Status
+    status: Status,
+    supplementals?: Supplemental[]
 }
 
 //* private, only org can see
@@ -40,7 +47,8 @@ const listingSchema = new Schema({
     description: {type: String, required: true},
     status: {type: String, default: Status.Open},
     applicants: {type: Array, default: []},
-    notifications: {type: Number, default: []}
+    notifications: {type: Number, default: []},
+    supplementals: {type: Array, default: []}
 })
 
 export const Listing = mongoose.model<OrgListing>
