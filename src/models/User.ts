@@ -1,4 +1,5 @@
 import mongoose, { Schema, model, connect } from 'mongoose'
+import {Supplemental} from './Listing'
 import { Role } from './enums/Role'
 
 //* held on the token, 

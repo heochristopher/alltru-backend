@@ -25,7 +25,12 @@ const apply = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
             return res.status(400).json('This listing is already closed');
         }
         yield User_1.User.findByIdAndUpdate(user._id, { $push: { appliedListings: req.params.id } });
-        yield Listing_1.Listing.findByIdAndUpdate(req.params.id, { $inc: { notifications: 1 } });
+        if (listing.supplementals.length === 0) {
+            yield Listing_1.Listing.findByIdAndUpdate(req.params.id, { $inc: { notifications: 1 }, $push: { applicants: {
+                        student: req.body.payload._id,
+                        supplementals: req.body.supplementals
+                    } } });
+        }
         res.status(200).send("Application Submitted");
     }
     catch (error) {

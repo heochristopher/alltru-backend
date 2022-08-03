@@ -6,7 +6,18 @@ import { Input } from './enums/Input'
 
 export interface Supplemental {
     prompt: string,
-    input: Input
+    input: Input,
+    identifier: Number,
+    optional: Boolean,
+    options: string[] | null
+}
+
+export interface Application {
+    student: mongoose.Types.ObjectId
+    supplementals: {
+        answer: string | File,
+        identifier: Number
+    }[]
 }
 
 //* public to all
@@ -24,12 +35,12 @@ export interface ListingAttributes {
     tags: string[],
     description: string,
     status: Status,
-    supplementals?: Supplemental[]
+    supplementals: Supplemental[]
 }
 
 //* private, only org can see
 export interface OrgListing extends ListingAttributes {
-    applicants: mongoose.Types.ObjectId[],
+    applicants: Application[],
     notifications: number
 }
 

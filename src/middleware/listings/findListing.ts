@@ -28,12 +28,12 @@ export const findListing = async(req: Request, res: Response, next: NextFunction
                 tags: listing!.tags,
                 description: listing!.description,
                 location: listing!.location,
-                status: listing!.status
+                status: listing!.status,
+                supplementals: listing!.supplementals
             }
             return res.json(data)
         }
         const user: any = jwt.verify(req.cookies['auth-token'], process.env.PRIVATEKEY as string)
-        console.log(user._id)
         if(user._id !== org!._id.toString()) {
             const data: ListingAttributes = {
                 _id: listing!._id,
@@ -45,7 +45,8 @@ export const findListing = async(req: Request, res: Response, next: NextFunction
                 tags: listing!.tags,
                 description: listing!.description,
                 location: listing!.location,
-                status: listing!.status
+                status: listing!.status,
+                supplementals: listing!.supplementals
             }
             return res.json(data)
         } else if(user._id === org!._id.toString()) {
@@ -61,7 +62,9 @@ export const findListing = async(req: Request, res: Response, next: NextFunction
                 location: listing!.location,
                 status: listing!.status,
                 applicants: listing!.applicants,
-                notifications: listing!.notifications
+                notifications: listing!.notifications,
+                supplementals: listing!.supplementals
+
             }
             return res.json(data)
         }
