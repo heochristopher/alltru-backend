@@ -9,20 +9,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.uploadResume = void 0;
-const User_1 = require("../../../models/User");
+exports.uploadSupplemental = void 0;
+const Role_1 = require("../../models/enums/Role");
+const Listing_1 = require("../../models/Listing");
 const cloudinary_1 = require("cloudinary");
-const Role_1 = require("../../../models/enums/Role");
-const uploadResume = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const Status_1 = require("../../models/enums/Status");
+const uploadSupplemental = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.body.payload.role !== Role_1.Role.Student) {
-        return res.status(400).json('Only students can upload resumes');
+        return res.status(400).json('You cannot apply to listings');
     }
     try {
-        if (req.file.mimetype.split('/')[1] !== 'pdf') {
-            return res.status(400).json('Please upload a .pdf file only');
+        const query = req.params.query.split('-');
+        const listing = yield Listing_1.Listing.findById(query[0]);
+        if (listing.status === Status_1.Status.Closed) {
+            return res.status(400).json('This listing is already closed');
         }
         cloudinary_1.v2.uploader.upload_stream({
-            folder: 'resumes',
+            folder: 'documents',
             format: 'pdf',
             quality: 'auto',
             fetch_format: 'auto',
@@ -34,13 +37,22 @@ const uploadResume = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
                     return res.status(400).json('Server Error');
                 }
                 const image = result.secure_url;
-                yield User_1.User.findByIdAndUpdate(req.body.payload._id, { $set: { resume: image } });
-                res.status(200).json('Successfully updated resume');
+                yield Listing_1.Listing.findByIdAndUpdate(req.params.id, { $push: { applicants: {
+                            student: req.body.payload._id,
+                            supplementals: req.body.supplementals
+                        } } });
+                res.status(200).json();
             });
         }
+        // if(listing!.supplementals.length === 0) {
+        //     await Listing.findByIdAndUpdate(req.params.id, {$inc: {notifications: 1}, $push: {applicants: {
+        //         student: req.body.payload._id,
+        //         supplementals: req.body.supplementals
+        //     }}})
+        // }
     }
     catch (error) {
-        res.status(400).json(error);
+        res.status(400).send(error);
     }
 });
-exports.uploadResume = uploadResume;
+exports.uploadSupplemental = uploadSupplemental;

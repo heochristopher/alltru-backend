@@ -90,8 +90,7 @@ router.post('/adminRegister', adminRegister)
 //listings
 router.post('/listing', requiresAuth, createListing)
 router.post('/saveListing/:id', requiresAuth, saveListing)
-router.post('/apply/:id', requiresAuth, apply)
-// router.post('/accept/:id', requiresAuth, accept)
+router.post('/apply/:id', upload.array('image'), requiresAuth, apply)
 
 //? PATCH REQUESTS
 router.patch('/profilePic', upload.single('image'), requiresAuth, profilePic)
@@ -99,6 +98,7 @@ router.patch('/uploadResume', upload.single('image'), requiresAuth, uploadResume
 router.patch('/deleteResume', requiresAuth, deleteResume)
 router.patch('/editProfile', requiresAuth, editProfile)
 router.patch('/closeListing', requiresAuth, closeListing)
+// router.patch('/uploadSupplemental/:query', upload.single('image'), requiresAuth)
 
 //? DELETE REQUESTS
 router.delete('/unsaveListing/:id', requiresAuth, unsaveListing)

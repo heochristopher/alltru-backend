@@ -1,7 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
 import { User } from '../../../models/User'
-import dotenv from 'dotenv'
-dotenv.config()
 import { v2 as cloudinary } from 'cloudinary'
 import { Role } from '../../../models/enums/Role'
 
