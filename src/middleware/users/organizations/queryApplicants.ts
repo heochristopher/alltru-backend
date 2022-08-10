@@ -1,3 +1,4 @@
+import mongoose from 'mongoose'
 import { Request, Response, NextFunction } from 'express'
 import { Role } from '../../../models/enums/Role'
 import { Listing } from '../../../models/Listing'
@@ -8,9 +9,13 @@ export const queryApplicants = async(req: Request, res: Response, next: NextFunc
         if(req.body.payload.role !== Role.Org) {return res.status(400).json('Access denied.')}
         const listing = await Listing.findById(req.params.id)
         if(listing!.org !== req.body.payload._id) {return res.status(400).json('Access denied.')}
+        let applicants: mongoose.Types.ObjectId[] = []
+        listing!.applicants.forEach((listing) => {
+            applicants.push(listing.student)
+        })
         const users = await User.find({
             '_id': {
-                $in: listing!.applicants
+                $in: applicants
             }
         })
         res.json(users)

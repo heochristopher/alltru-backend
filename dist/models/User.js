@@ -40,7 +40,6 @@ const userSchema = new mongoose_1.Schema({
     },
     website: { type: String, default: null },
     biography: { type: String, default: null },
-    //? host resume on Cloudinary?
     resume: { type: String, default: null },
     savedListings: { type: Array, default: [] },
     appliedListings: { type: Array, default: [] },

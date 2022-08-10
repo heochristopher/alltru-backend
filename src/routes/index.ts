@@ -47,6 +47,7 @@ import { unsaveListing } from '../middleware/listings/unsaveListing'
 import { closeListing } from '../middleware/listings/closeListing'
 import { readNotification } from '../middleware/listings/readNotification'
 import { searchListings } from '../middleware/listings/searchListings'
+import { uploadSupplemental } from '../middleware/listings/uploadSupplemental'
 
 //* ROUTES
 
@@ -90,7 +91,7 @@ router.post('/adminRegister', adminRegister)
 //listings
 router.post('/listing', requiresAuth, createListing)
 router.post('/saveListing/:id', requiresAuth, saveListing)
-router.post('/apply/:id', upload.array('image'), requiresAuth, apply)
+router.post('/apply/:id', requiresAuth, apply)
 
 //? PATCH REQUESTS
 router.patch('/profilePic', upload.single('image'), requiresAuth, profilePic)
@@ -98,7 +99,7 @@ router.patch('/uploadResume', upload.single('image'), requiresAuth, uploadResume
 router.patch('/deleteResume', requiresAuth, deleteResume)
 router.patch('/editProfile', requiresAuth, editProfile)
 router.patch('/closeListing', requiresAuth, closeListing)
-// router.patch('/uploadSupplemental/:query', upload.single('image'), requiresAuth)
+router.patch('/uploadSupplemental/:query', upload.single('image'), requiresAuth, uploadSupplemental)
 
 //? DELETE REQUESTS
 router.delete('/unsaveListing/:id', requiresAuth, unsaveListing)

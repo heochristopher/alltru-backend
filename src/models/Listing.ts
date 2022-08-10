@@ -15,7 +15,7 @@ export interface Supplemental {
 export interface Application {
     student: mongoose.Types.ObjectId
     supplementals: {
-        answer: string | File,
+        answer: string,
         identifier: Number
     }[]
 }

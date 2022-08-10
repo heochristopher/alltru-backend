@@ -25,18 +25,13 @@ export const uploadSupplemental = async(req: Request, res: Response, next: NextF
             }
             const image = result.secure_url
 
-            await Listing.findByIdAndUpdate(req.params.id, { $push: {applicants: {
-                student: req.body.payload._id,
-                supplementals: req.body.supplementals
+            await Listing.findOneAndUpdate({'_id': query[0], 'applicants': {$elemMatch: {'student': req.body.payload._id}}},
+            {$push: {'applicants.$.supplementals': {
+                answer: image,
+                identifier: parseInt(query[1])
             }}})
-            res.status(200).json()
+            res.status(200).json('uploaded')
         }
-        // if(listing!.supplementals.length === 0) {
-        //     await Listing.findByIdAndUpdate(req.params.id, {$inc: {notifications: 1}, $push: {applicants: {
-        //         student: req.body.payload._id,
-        //         supplementals: req.body.supplementals
-        //     }}})
-        // }
     } catch (error) {
         res.status(400).send(error)
     }

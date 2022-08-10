@@ -22,9 +22,13 @@ const queryApplicants = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
         if (listing.org !== req.body.payload._id) {
             return res.status(400).json('Access denied.');
         }
+        let applicants = [];
+        listing.applicants.forEach((listing) => {
+            applicants.push(listing.student);
+        });
         const users = yield User_1.User.find({
             '_id': {
-                $in: listing.applicants
+                $in: applicants
             }
         });
         res.json(users);

@@ -45,6 +45,7 @@ const unsaveListing_1 = require("../middleware/listings/unsaveListing");
 const closeListing_1 = require("../middleware/listings/closeListing");
 const readNotification_1 = require("../middleware/listings/readNotification");
 const searchListings_1 = require("../middleware/listings/searchListings");
+const uploadSupplemental_1 = require("../middleware/listings/uploadSupplemental");
 //* ROUTES
 //? GET REQUESTS
 //listings
@@ -78,14 +79,14 @@ router.post('/adminRegister', register_3.adminRegister);
 //listings
 router.post('/listing', requiresAuth_1.requiresAuth, createListing_1.createListing);
 router.post('/saveListing/:id', requiresAuth_1.requiresAuth, saveListing_1.saveListing);
-router.post('/apply/:id', multer_1.upload.array('image'), requiresAuth_1.requiresAuth, apply_1.apply);
+router.post('/apply/:id', requiresAuth_1.requiresAuth, apply_1.apply);
 //? PATCH REQUESTS
 router.patch('/profilePic', multer_1.upload.single('image'), requiresAuth_1.requiresAuth, profilePic_1.profilePic);
 router.patch('/uploadResume', multer_1.upload.single('image'), requiresAuth_1.requiresAuth, uploadResume_1.uploadResume);
 router.patch('/deleteResume', requiresAuth_1.requiresAuth, deleteResume_1.deleteResume);
 router.patch('/editProfile', requiresAuth_1.requiresAuth, editProfile_1.editProfile);
 router.patch('/closeListing', requiresAuth_1.requiresAuth, closeListing_1.closeListing);
-// router.patch('/uploadSupplemental/:query', upload.single('image'), requiresAuth)
+router.patch('/uploadSupplemental/:query', multer_1.upload.single('image'), requiresAuth_1.requiresAuth, uploadSupplemental_1.uploadSupplemental);
 //? DELETE REQUESTS
 router.delete('/unsaveListing/:id', requiresAuth_1.requiresAuth, unsaveListing_1.unsaveListing);
 router.delete('/readNotification/:id', requiresAuth_1.requiresAuth, readNotification_1.readNotification);
