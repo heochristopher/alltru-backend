@@ -38,6 +38,11 @@ export interface ListingAttributes {
     supplementals: Supplemental[]
 }
 
+//* private, only student can see
+export interface StudentListing extends ListingAttributes {
+    application?: Application
+}
+
 //* private, only org can see
 export interface OrgListing extends ListingAttributes {
     applicants: Application[],

@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
-import { Listing, ListingAttributes, OrgListing } from '../../models/Listing'
+import { Role } from '../../models/enums/Role'
+import { Application, Listing, ListingAttributes, OrgListing, StudentListing } from '../../models/Listing'
 import { User, UserAttributes, UserToken } from '../../models/User'
 
 export const findListing = async(req: Request, res: Response, next: NextFunction) => {
@@ -34,7 +35,25 @@ export const findListing = async(req: Request, res: Response, next: NextFunction
             return res.json(data)
         }
         const user: any = jwt.verify(req.cookies['auth-token'], process.env.PRIVATEKEY as string)
-        if(user._id !== org!._id.toString()) {
+        if(user.role === Role.Student) {
+            const application: Application | undefined = listing!.applicants.find((e) => e.student === user._id)
+            const data: StudentListing = {
+                _id: listing!._id,
+                org: orgData,
+                position: listing!.position,
+                type: listing!.type,
+                date: listing!.date,
+                remote: listing!.remote,
+                tags: listing!.tags,
+                description: listing!.description,
+                location: listing!.location,
+                status: listing!.status,
+                supplementals: listing!.supplementals,
+                application: application
+            }
+            return res.json(data)
+        }
+        else if(user._id !== org!._id.toString()) {
             const data: ListingAttributes = {
                 _id: listing!._id,
                 org: orgData,

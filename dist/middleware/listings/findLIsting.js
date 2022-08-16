@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.findListing = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const Role_1 = require("../../models/enums/Role");
 const Listing_1 = require("../../models/Listing");
 const User_1 = require("../../models/User");
 const findListing = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -47,7 +48,25 @@ const findListing = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
             return res.json(data);
         }
         const user = jsonwebtoken_1.default.verify(req.cookies['auth-token'], process.env.PRIVATEKEY);
-        if (user._id !== org._id.toString()) {
+        if (user.role === Role_1.Role.Student) {
+            const application = listing.applicants.find((e) => e.student === user._id);
+            const data = {
+                _id: listing._id,
+                org: orgData,
+                position: listing.position,
+                type: listing.type,
+                date: listing.date,
+                remote: listing.remote,
+                tags: listing.tags,
+                description: listing.description,
+                location: listing.location,
+                status: listing.status,
+                supplementals: listing.supplementals,
+                application: application
+            };
+            return res.json(data);
+        }
+        else if (user._id !== org._id.toString()) {
             const data = {
                 _id: listing._id,
                 org: orgData,
