@@ -12,7 +12,6 @@ export const validateToken = async (req: Request, res: Response, next: NextFunct
             affiliation: user!.affiliation,
             avatar: user!.avatar,
             role: user!.role,
-
         }
         res.send(payload)
     } catch (error) {

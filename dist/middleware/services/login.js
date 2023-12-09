@@ -27,7 +27,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         const validPassword = bcryptjs_1.default.compareSync(password, existingUser.password);
         if (!validPassword) {
-            return res.status(400).json('Invalid Password');
+            return res.status(400).json('Invalid password');
         }
         const payload = {
             _id: existingUser._id,

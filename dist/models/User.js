@@ -44,6 +44,10 @@ const userSchema = new mongoose_1.Schema({
     savedListings: { type: Array, default: [] },
     appliedListings: { type: Array, default: [] },
     createdListings: { type: Array, default: [] },
-    listings: { type: Array, default: [] }
+    listings: { type: Array, default: [] },
+    resetPassword: {
+        code: { type: String, default: null },
+        verified: { type: Boolean, default: false }
+    }
 });
 exports.User = mongoose_1.default.model('User', userSchema);

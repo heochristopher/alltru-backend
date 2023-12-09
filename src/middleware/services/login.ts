@@ -12,7 +12,7 @@ export const login = async (req: Request, res: Response) => {
         const existingUser = await User.findOne({ email })
         if (!existingUser) { return res.status(400).json('There is no user registered under this email. Meant to register?')}
         const validPassword = bcrypt.compareSync(password, existingUser!.password)
-        if (!validPassword) { return res.status(400).json('Invalid Password')}
+        if (!validPassword) { return res.status(400).json('Invalid password')}
         const payload: UserToken = {
             _id: existingUser!._id,
             role: existingUser!.role,

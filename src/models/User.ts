@@ -51,6 +51,10 @@ export interface UserInterface extends StudentInterface, OrgInterface {}
 //* never gets sent
 export interface UserCredentials extends UserInterface {
     password: string,
+    resetPassword: {
+        code: string,
+        verified: boolean
+    }
 }
 
 const userSchema = new Schema({
@@ -72,7 +76,11 @@ const userSchema = new Schema({
     savedListings: {type: Array, default: []},
     appliedListings: {type: Array, default: []},
     createdListings: {type: Array, default: []},
-    listings: {type: Array, default: []}
+    listings: { type: Array, default: [] },
+    resetPassword: {
+        code: { type: String, default: null },
+        verified: {type: Boolean, default: false}
+    }
 })
 
 export const User = mongoose.model<UserCredentials>

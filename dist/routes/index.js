@@ -13,6 +13,7 @@ const login_1 = require("../middleware/services/login");
 const requiresAuth_1 = require("../middleware/services/requiresAuth");
 const logout_1 = require("../middleware/services/logout");
 const validateToken_1 = require("../middleware/services/validateToken");
+const resetPassword_1 = require("../middleware/services/resetPassword");
 const sendUser_1 = require("../middleware/users/sendUser");
 const sendOther_1 = require("../middleware/users/sendOther");
 const profilePic_1 = require("../middleware/users/profilePic");
@@ -87,6 +88,9 @@ router.patch('/deleteResume', requiresAuth_1.requiresAuth, deleteResume_1.delete
 router.patch('/editProfile', requiresAuth_1.requiresAuth, editProfile_1.editProfile);
 router.patch('/closeListing', requiresAuth_1.requiresAuth, closeListing_1.closeListing);
 router.patch('/uploadSupplemental/:query', multer_1.upload.single('image'), requiresAuth_1.requiresAuth, uploadSupplemental_1.uploadSupplemental);
+router.patch('/requestNewPassword', requiresAuth_1.requiresAuth, resetPassword_1.requestNewPassword);
+router.patch('/verifyResetCode', requiresAuth_1.requiresAuth, resetPassword_1.verifyResetCode);
+router.patch('/resetPassword', requiresAuth_1.requiresAuth, resetPassword_1.resetPassword);
 //? DELETE REQUESTS
 router.delete('/unsaveListing/:id', requiresAuth_1.requiresAuth, unsaveListing_1.unsaveListing);
 router.delete('/readNotification/:id', requiresAuth_1.requiresAuth, readNotification_1.readNotification);

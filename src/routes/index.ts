@@ -8,6 +8,7 @@ import { login } from '../middleware/services/login'
 import { requiresAuth } from '../middleware/services/requiresAuth'
 import { logout } from '../middleware/services/logout'
 import { validateToken } from '../middleware/services/validateToken'
+import { requestNewPassword, resetPassword, verifyResetCode } from '../middleware/services/resetPassword'
 
 //? users
 import { Role } from '../models/enums/Role'
@@ -48,6 +49,7 @@ import { closeListing } from '../middleware/listings/closeListing'
 import { readNotification } from '../middleware/listings/readNotification'
 import { searchListings } from '../middleware/listings/searchListings'
 import { uploadSupplemental } from '../middleware/listings/uploadSupplemental'
+
 
 //* ROUTES
 
@@ -100,6 +102,9 @@ router.patch('/deleteResume', requiresAuth, deleteResume)
 router.patch('/editProfile', requiresAuth, editProfile)
 router.patch('/closeListing', requiresAuth, closeListing)
 router.patch('/uploadSupplemental/:query', upload.single('image'), requiresAuth, uploadSupplemental)
+router.patch('/requestNewPassword', requiresAuth, requestNewPassword)
+router.patch('/verifyResetCode', requiresAuth, verifyResetCode)
+router.patch('/resetPassword', requiresAuth, resetPassword)
 
 //? DELETE REQUESTS
 router.delete('/unsaveListing/:id', requiresAuth, unsaveListing)
