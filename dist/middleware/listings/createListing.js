@@ -44,7 +44,6 @@ const createListing = (req, res, next) => __awaiter(void 0, void 0, void 0, func
         res.status(200).send(listing);
     }
     catch (error) {
-        console.log(error);
         res.status(400).send(error);
     }
 });

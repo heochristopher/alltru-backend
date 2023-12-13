@@ -30,7 +30,6 @@ export const createListing = async(req: Request, res: Response, next: NextFuncti
         }, {$push: {createdListings: listing._id}})
         res.status(200).send(listing)
     } catch (error) {
-        console.log(error)
         res.status(400).send(error)
     }
 }

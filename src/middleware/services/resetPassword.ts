@@ -25,17 +25,18 @@ dotenv.config()
 
 export const requestNewPassword = async (req: Request, res: Response) => {
     try {
-        const user = req.body.payload
         const verificationCode = Math.floor(100000 + Math.random() * 900000)
         const hashedCode = await bcrypt.hash(verificationCode.toString(), 10);
-        await User.findByIdAndUpdate(user._id, {
+        const user = await User.findOneAndUpdate({email: req.body.email}, {
             $set: {
                 resetPassword: {
                     code: hashedCode,
                     verified: false
                 }
             }
-        })
+        }, { new: true })
+
+        if(!user) {return res.status(400).json("We couldn't find an account registered under that email. Meant to register?")}
         res.status(200).json('You have received an email with a verification code')
         const mailOptions = {
             from: process.env.EMAIL_USER,
@@ -48,7 +49,7 @@ export const requestNewPassword = async (req: Request, res: Response) => {
 
             ${verificationCode}
 
-            Don't know where to enter the code? Click <a href="www.alltru.app/listings">here</a>
+            Don't know where to enter the code? Click <a href="www.alltru.app/recover/verify">here</a>
 
             If you didn't make this request, just ignore this message.
 
@@ -58,42 +59,38 @@ export const requestNewPassword = async (req: Request, res: Response) => {
         }
         transport.sendMail(mailOptions)
     } catch (error) {
-        console.log(error)
         res.status(400).json(error)
     }
 }
 export const verifyResetCode = async (req: Request, res: Response) => {
     try {
-        const user = req.body.payload
-        const existingUser = await User.findById(user._id)
-        const validCode: Boolean = bcrypt.compareSync(req.body.code.toString(), existingUser!.resetPassword.code)
+        const user = await User.findOne({email: req.body.email})
+        const validCode: Boolean = bcrypt.compareSync(req.body.code.toString(), user!.resetPassword.code)
         if (!validCode) { return res.status(400).json('Invalid code') }
-        await User.findByIdAndUpdate(user._id, {
+        await User.findOneAndUpdate({email: req.body.email}, {
             $set: {
                 resetPassword: {
-                    code: existingUser!.resetPassword.code,
+                    code: user!.resetPassword.code,
                     verified: true
                 }
             }
         })
-        res.status(200).json()
+        res.status(200).json('Your code has been successfully verified.')
     } catch (error) {
-        console.log('asdf')
         res.status(400).json(error)
     }
 }
 export const resetPassword = async (req: Request, res: Response) => {
     try {
-        const user = req.body.payload
         if (req.body.password1 !== req.body.password2) { return res.status(400).json('Passwords do not match.') }
         
         if (req.body.password1.length < 6) { return res.status(400).json('Your password must be at least 6 characters long.') }
 
-        const existingUser = await User.findById(user._id)
-        if (!existingUser!.resetPassword.verified) { return res.status(400).json('You do not have access to this service.') }
+        const user = await User.findOne({email: req.body.email})
+        if (!user!.resetPassword.verified) { return res.status(400).json('You do not have access to this service.') }
 
         const hashedPassword = await bcrypt.hash(req.body.password1, 10);
-        await User.findByIdAndUpdate(user._id, {
+        await User.findOneAndUpdate({email: req.body.email}, {
             $set: {
                 password: hashedPassword,
                 resetPassword: {

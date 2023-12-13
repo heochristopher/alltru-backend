@@ -102,9 +102,9 @@ router.patch('/deleteResume', requiresAuth, deleteResume)
 router.patch('/editProfile', requiresAuth, editProfile)
 router.patch('/closeListing', requiresAuth, closeListing)
 router.patch('/uploadSupplemental/:query', upload.single('image'), requiresAuth, uploadSupplemental)
-router.patch('/requestNewPassword', requiresAuth, requestNewPassword)
-router.patch('/verifyResetCode', requiresAuth, verifyResetCode)
-router.patch('/resetPassword', requiresAuth, resetPassword)
+router.patch('/requestNewPassword', requestNewPassword)
+router.patch('/verifyResetCode', verifyResetCode)
+router.patch('/resetPassword', resetPassword)
 
 //? DELETE REQUESTS
 router.delete('/unsaveListing/:id', requiresAuth, unsaveListing)

@@ -32,17 +32,19 @@ dotenv_1.default.config();
 //set verification code to null and verified to false
 const requestNewPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = req.body.payload;
         const verificationCode = Math.floor(100000 + Math.random() * 900000);
         const hashedCode = yield bcryptjs_1.default.hash(verificationCode.toString(), 10);
-        yield User_1.User.findByIdAndUpdate(user._id, {
+        const user = yield User_1.User.findOneAndUpdate({ email: req.body.email }, {
             $set: {
                 resetPassword: {
                     code: hashedCode,
                     verified: false
                 }
             }
-        });
+        }, { new: true });
+        if (!user) {
+            return res.status(400).json("We couldn't find an account registered under that email. Meant to register?");
+        }
         res.status(200).json('You have received an email with a verification code');
         const mailOptions = {
             from: process.env.EMAIL_USER,
@@ -54,7 +56,7 @@ const requestNewPassword = (req, res) => __awaiter(void 0, void 0, void 0, funct
 
             ${verificationCode}
 
-            Don't know where to enter the code? Click <a href="www.alltru.app/listings">here</a>
+            Don't know where to enter the code? Click <a href="www.alltru.app/recover/verify">here</a>
 
             If you didn't make this request, just ignore this message.
 
@@ -65,50 +67,46 @@ const requestNewPassword = (req, res) => __awaiter(void 0, void 0, void 0, funct
         mail_1.transport.sendMail(mailOptions);
     }
     catch (error) {
-        console.log(error);
         res.status(400).json(error);
     }
 });
 exports.requestNewPassword = requestNewPassword;
 const verifyResetCode = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = req.body.payload;
-        const existingUser = yield User_1.User.findById(user._id);
-        const validCode = bcryptjs_1.default.compareSync(req.body.code.toString(), existingUser.resetPassword.code);
+        const user = yield User_1.User.findOne({ email: req.body.email });
+        const validCode = bcryptjs_1.default.compareSync(req.body.code.toString(), user.resetPassword.code);
         if (!validCode) {
             return res.status(400).json('Invalid code');
         }
-        yield User_1.User.findByIdAndUpdate(user._id, {
+        yield User_1.User.findOneAndUpdate({ email: req.body.email }, {
             $set: {
                 resetPassword: {
-                    code: existingUser.resetPassword.code,
+                    code: user.resetPassword.code,
                     verified: true
                 }
             }
         });
-        res.status(200).json();
+        res.status(200).json('Your code has been successfully verified.');
     }
     catch (error) {
-        console.log('asdf');
         res.status(400).json(error);
     }
 });
 exports.verifyResetCode = verifyResetCode;
 const resetPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = req.body.payload;
         if (req.body.password1 !== req.body.password2) {
             return res.status(400).json('Passwords do not match.');
         }
         if (req.body.password1.length < 6) {
             return res.status(400).json('Your password must be at least 6 characters long.');
         }
-        const existingUser = yield User_1.User.findById(user._id);
-        if (!existingUser.resetPassword.verified) {
+        const user = yield User_1.User.findOne({ email: req.body.email });
+        if (!user.resetPassword.verified) {
             return res.status(400).json('You do not have access to this service.');
         }
         const hashedPassword = yield bcryptjs_1.default.hash(req.body.password1, 10);
-        yield User_1.User.findByIdAndUpdate(user._id, {
+        yield User_1.User.findOneAndUpdate({ email: req.body.email }, {
             $set: {
                 password: hashedPassword,
                 resetPassword: {
